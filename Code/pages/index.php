@@ -1,8 +1,10 @@
 <?php
-$bdd = new PDO('mysql:host=localhost;dbname=golden_ticket;charset=utf8', 'golden_ticket', 'secret');
-$events = $bdd->query('select * from event');
+// Model
+require 'model.php';
+
+$events = getArticles();
 
 // Data display
 require 'view.php';
 
-?>
+
