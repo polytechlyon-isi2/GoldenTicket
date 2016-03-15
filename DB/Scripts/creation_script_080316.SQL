@@ -66,12 +66,12 @@ CREATE TABLE EventType
 (
   num_ET Int NOT NULL AUTO_INCREMENT,
   name_ET Varchar(20),
-  EventCategoryID Int,
+  num_eventCategory Int,
  PRIMARY KEY (num_ET)
 )
 ;
 
-CREATE INDEX IX_Relationship25 ON EventType (EventCategoryID)
+CREATE INDEX IX_Relationship25 ON EventType (num_eventCategory)
 ;
 
 -- Table PlaceCategory
@@ -131,9 +131,9 @@ CREATE TABLE Status
 
 CREATE TABLE EventCategory
 (
-  EventCategoryID Int NOT NULL AUTO_INCREMENT,
-  EventCategoryName Varchar(40),
- PRIMARY KEY (EventCategoryID)
+  num_eventCategory Int NOT NULL AUTO_INCREMENT,
+  name_eventCategory Varchar(40),
+ PRIMARY KEY (num_eventCategory)
 )
 ;
 
@@ -160,7 +160,7 @@ ALTER TABLE Event ADD CONSTRAINT Relationship22 FOREIGN KEY (num_status) REFEREN
 ALTER TABLE Event ADD CONSTRAINT Relationship23 FOREIGN KEY (num_ET) REFERENCES EventType (num_ET) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
-ALTER TABLE EventType ADD CONSTRAINT Relationship25 FOREIGN KEY (EventCategoryID) REFERENCES EventCategory (EventCategoryID) ON DELETE NO ACTION ON UPDATE NO ACTION
+ALTER TABLE EventType ADD CONSTRAINT Relationship25 FOREIGN KEY (num_eventCategory) REFERENCES EventCategory (num_eventCategory) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 
