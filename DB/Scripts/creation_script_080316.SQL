@@ -1,6 +1,6 @@
 ﻿/*
 Created: 08/03/2016
-Modified: 08/03/2016
+Modified: 15/03/2016
 Model: MySQL 5.5
 Database: MySQL 5.5
 */
@@ -27,6 +27,7 @@ CREATE INDEX IX_Relationship4 ON Ticket (num_PC)
 CREATE TABLE Event
 (
   num_event Int NOT NULL AUTO_INCREMENT,
+  event_name Varchar(100),
   minimalPrice_event Int,
   startDate_event Date,
   startHour_event Time,
@@ -65,8 +66,12 @@ CREATE TABLE EventType
 (
   num_ET Int NOT NULL AUTO_INCREMENT,
   name_ET Varchar(20),
+  EventCategoryID Int,
  PRIMARY KEY (num_ET)
 )
+;
+
+CREATE INDEX IX_Relationship25 ON EventType (EventCategoryID)
 ;
 
 -- Table PlaceCategory
@@ -122,6 +127,16 @@ CREATE TABLE Status
 )
 ;
 
+-- Table EventCategory
+
+CREATE TABLE EventCategory
+(
+  EventCategoryID Int NOT NULL AUTO_INCREMENT,
+  EventCategoryName Varchar(40),
+ PRIMARY KEY (EventCategoryID)
+)
+;
+
 -- Create relationships section ------------------------------------------------- 
 
 ALTER TABLE PlaceCategory ADD CONSTRAINT Relationship3 FOREIGN KEY (num_event) REFERENCES Event (num_event) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -143,6 +158,9 @@ ALTER TABLE Event ADD CONSTRAINT Relationship22 FOREIGN KEY (num_status) REFEREN
 ;
 
 ALTER TABLE Event ADD CONSTRAINT Relationship23 FOREIGN KEY (num_ET) REFERENCES EventType (num_ET) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE EventType ADD CONSTRAINT Relationship25 FOREIGN KEY (EventCategoryID) REFERENCES EventCategory (EventCategoryID) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 
