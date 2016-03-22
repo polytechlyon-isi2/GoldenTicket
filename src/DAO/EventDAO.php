@@ -1,9 +1,9 @@
 <?php
 
-namespace MicroCMS\DAO;
+namespace GoldenTicket\DAO;
 
 use Doctrine\DBAL\Connection;
-use MicroCMS\Domain\Event;
+use GoldenTicket\Domain\Event;
 
 class EventDAO
 {
