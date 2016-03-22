@@ -11,8 +11,8 @@
     </header>
     <?php foreach ($events as $event): ?>
     <article>
-        <h2><?php echo $event['event_name'] ?></h2>
-        <p><?php echo $event['minimalPrice_event'] ?></p>
+        <h2><?php echo $event->getTitle() ?></h2>
+        <p><?php echo $event->getContent ?></p>
     </article>
     <?php endforeach ?>
     <footer class="footer">
