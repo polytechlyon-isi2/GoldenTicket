@@ -16,7 +16,7 @@
     </article>
     <?php endforeach ?>
     <footer class="footer">
-        <a href="https://github.com/bpesquet/OC-MicroCMS">MicroCMS</a> is a miimalistic CMS built as a showcase for modern PHP development.
+        <a href="https://github.com/bpesquet/OC-MicroCMS">GoldenTicket</a> is a miimalistic event application built as a showcase for modern PHP development.
     </footer>
 </body>
 </html>
