@@ -11,12 +11,12 @@
     </header>
     <?php foreach ($events as $event): ?>
     <article>
-        <h2><?php echo $event['event_name'] ?></h2>
-        <p><?php echo $event['minimalPrice_event'] ?></p>
+        <h2><?php echo $event->getTitle() ?></h2>
+        <p><?php echo $event->getContent ?></p>
     </article>
     <?php endforeach ?>
     <footer class="footer">
-        <a href="https://github.com/bpesquet/OC-MicroCMS">MicroCMS</a> is a miimalistic CMS built as a showcase for modern PHP development.
+        <a href="https://github.com/bpesquet/OC-MicroCMS">GoldenTicket</a> is a miimalistic event application built as a showcase for modern PHP development.
     </footer>
 </body>
 </html>
