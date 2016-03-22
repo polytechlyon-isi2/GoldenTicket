@@ -1,6 +1,6 @@
 ﻿/*
 Created: 08/03/2016
-Modified: 15/03/2016
+Modified: 22/03/2016
 Model: MySQL 5.5
 Database: MySQL 5.5
 */
@@ -14,7 +14,7 @@ CREATE TABLE Ticket
   num_ticket Int NOT NULL AUTO_INCREMENT,
   num_PC Int,
   numPlace_ticket Int,
-  placement Varchar(20),
+  placement_ticket Varchar(20),
  PRIMARY KEY (num_ticket)
 )
 ;
@@ -66,12 +66,8 @@ CREATE TABLE EventType
 (
   num_ET Int NOT NULL AUTO_INCREMENT,
   name_ET Varchar(20),
-  num_eventCategory Int,
  PRIMARY KEY (num_ET)
 )
-;
-
-CREATE INDEX IX_Relationship25 ON EventType (num_eventCategory)
 ;
 
 -- Table PlaceCategory
@@ -82,7 +78,7 @@ CREATE TABLE PlaceCategory
   nom_PC Int,
   price_PC Int,
   initialNumberOfTicket_PC Int,
-  actualNumberOfTickets Int,
+  actualNumberOfTickets_PC Int,
   num_event Int,
  PRIMARY KEY (num_PC)
 )
@@ -127,14 +123,23 @@ CREATE TABLE Status
 )
 ;
 
--- Table EventCategory
+-- Table Commentary
 
-CREATE TABLE EventCategory
+CREATE TABLE Commentary
 (
-  num_eventCategory Int NOT NULL AUTO_INCREMENT,
-  name_eventCategory Varchar(40),
- PRIMARY KEY (num_eventCategory)
+  num_commentary Int NOT NULL AUTO_INCREMENT,
+  rate_commentary Int,
+  text_commentary Varchar(400),
+  num_event Int,
+  num_user Int,
+ PRIMARY KEY (num_commentary)
 )
+;
+
+CREATE INDEX IX_Relationship29 ON Commentary (num_event)
+;
+
+CREATE INDEX IX_Relationship33 ON Commentary (num_user)
 ;
 
 -- Create relationships section ------------------------------------------------- 
@@ -160,7 +165,10 @@ ALTER TABLE Event ADD CONSTRAINT Relationship22 FOREIGN KEY (num_status) REFEREN
 ALTER TABLE Event ADD CONSTRAINT Relationship23 FOREIGN KEY (num_ET) REFERENCES EventType (num_ET) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
-ALTER TABLE EventType ADD CONSTRAINT Relationship25 FOREIGN KEY (num_eventCategory) REFERENCES EventCategory (num_eventCategory) ON DELETE NO ACTION ON UPDATE NO ACTION
+ALTER TABLE Commentary ADD CONSTRAINT Relationship29 FOREIGN KEY (num_event) REFERENCES Event (num_event) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE Commentary ADD CONSTRAINT Relationship33 FOREIGN KEY (num_user) REFERENCES User (num_user) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 
