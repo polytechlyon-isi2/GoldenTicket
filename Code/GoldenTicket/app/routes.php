@@ -1,9 +1,8 @@
 <?php
 
 // Home page
-$app->get('/', function () {
-    require '../src/model.php';
-    $events = getEvents();
+$app->get('/', function () use ($app) {
+    $events = $app['dao.event']->findAll();
 
     ob_start();             // start buffering HTML output
     require '../views/view.php';

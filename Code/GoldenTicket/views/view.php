@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <link href="../web/GoldenTicket.css" rel="stylesheet" />
+    <link href="GoldenTicket.css" rel="stylesheet" />
     <title>MicroCMS - Home</title>
 </head>
 <body>
@@ -11,8 +11,8 @@
     </header>
     <?php foreach ($events as $event): ?>
     <article>
-        <h2><?php echo $event['num_event'] ?></h2>
-        <p><?php echo $event['name_event'] ?></p>
+        <h2><?php echo $event->getNum() ?></h2>
+        <p><?php echo $event->getName() ?></p>
     </article>
     <?php endforeach ?>
     <footer class="footer">

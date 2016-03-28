@@ -53,7 +53,7 @@ class EventDAO
         $event->setName($row['name_event']);
         $event->setMinimalPrice($row['minimalPrice_event']);
         $event->setStartDate($row['startDate_event']);
-        $event->setStartHour($row['	startHour_event']);
+        $event->setStartHour($row['startHour_event']);
         $event->setEndDate($row['endDate_event']);
         $event->setEndHour($row['endHour_event']);
         $event->setDesc($row['desc_event']);
