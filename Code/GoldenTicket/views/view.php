@@ -12,7 +12,7 @@
     <?php foreach ($events as $event): ?>
     <article>
         <h2><?php echo $event['num_event'] ?></h2>
-        <p><?php echo $event['event_name'] ?></p>
+        <p><?php echo $event['name_event'] ?></p>
     </article>
     <?php endforeach ?>
     <footer class="footer">
