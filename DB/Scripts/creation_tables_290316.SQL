@@ -27,7 +27,7 @@ CREATE INDEX IX_Relationship4 ON Ticket (num_PC)
 CREATE TABLE Event
 (
   num_event Int NOT NULL AUTO_INCREMENT,
-  event_name Varchar(100),
+  name_event Varchar(100),
   minimalPrice_event Int,
   startDate_event Date,
   startHour_event Time,
