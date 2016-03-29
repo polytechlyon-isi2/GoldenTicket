@@ -2,27 +2,10 @@
 
 namespace GoldenTicket\DAO;
 
-use Doctrine\DBAL\Connection;
 use GoldenTicket\Domain\Event;
 
-class EventDAO
+class EventDAO extends DAO
 {
-    /**
-     * Database connection
-     *
-     * @var \Doctrine\DBAL\Connection
-     */
-    private $db;
-
-    /**
-     * Constructor
-     *
-     * @param \Doctrine\DBAL\Connection The database connection object
-     */
-    public function __construct(Connection $db) {
-        $this->db = $db;
-    }
-
     /**
      * Return a list of all articles, sorted by date (most recent first).
      *
@@ -30,13 +13,13 @@ class EventDAO
      */
     public function findAll() {
         $sql = "select * from event";
-        $result = $this->db->fetchAll($sql);
+        $result = $this->getDb()->fetchAll($sql);
 
         // Convert query result to an array of domain objects
         $events = array();
         foreach ($result as $row) {
             $eventId = $row['num_event'];
-            $events[$eventId] = $this->buildArticle($row);
+            $events[$eventId] = $this->buildDomainObject($row);
         }
         return $events;
     }
@@ -45,9 +28,9 @@ class EventDAO
      * Creates an Article object based on a DB row.
      *
      * @param array $row The DB row containing Article data.
-     * @return \MicroCMS\Domain\Article
+     * @return \GoldenTicket\Domain\Event
      */
-    private function buildArticle(array $row) {
+    protected function buildDomainObject($row) {
         $event = new Event();
         $event->setNum($row['num_event']);
         $event->setName($row['name_event']);
@@ -61,5 +44,15 @@ class EventDAO
         $event->setStatus($row['num_status']);
         $event->setCoverImageLink($row['coverImage_event']);
         return $event;
+    }
+
+    public function find($id) {
+        $sql = "select * from event where num_event=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
+
+        if ($row)
+            return $this->buildDomainObject($row);
+        else
+            throw new \Exception("No article matching id " . $id);
     }
 }

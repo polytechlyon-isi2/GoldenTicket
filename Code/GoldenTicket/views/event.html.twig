@@ -1,0 +1,16 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}{{ event.name }}{% endblock %}
+
+{% block content %}
+<p>
+    <h2>{{ event.name }}</h2>
+    <p>{{ event.desc }}</p>
+    <h3>Comments</h3>
+    {% for comment in comments %}
+        <strong>{{ comment.rate }}</strong> said : {{ comment.text }}<br>
+    {% else %}
+        No comments yet.
+    {% endfor %}
+</p>
+{% endblock %}
