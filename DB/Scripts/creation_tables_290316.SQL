@@ -1,4 +1,4 @@
-﻿/*
+/*
 Created: 08/03/2016
 Modified: 22/03/2016
 Model: MySQL 5.5
@@ -56,6 +56,8 @@ CREATE TABLE User
   surname_user Varchar(40),
   login_user Varchar(40),
   password_user Varchar(40),
+  salt_user varchar(23) not null,
+  role_user varchar(50) not null,
  PRIMARY KEY (num_user)
 )
 ;

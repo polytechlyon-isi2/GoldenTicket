@@ -17,10 +17,11 @@ VALUES
 	(NULL, 'Hip-Hop contest', '10', '2016-03-26', '00:50:00', '2016-03-31', '09:00:20', 'Putin de battle de Hip-Hop', '3', '2', NULL),
 	(NULL, 'Champions League', '91', '2016-03-30', '21:00:00', '2016-03-30', '23:00:00', 'C''est la Champions League 75 c''est la Champions League 91 c''est la Champions League 92 c''est la Champions League 93 c''est la Champions League 94 c''est la Champions League 95 c''est la Champions League 77 c''est la Champions League 78 c''est la Champions League C''est la Champions League Paname c''est la Champions League Fuck si t''es pas d''ma team Paname c''est la Champions League On baise tout en Champions League Paname c''est la Champions League Fuck si t''es pas d''ma team On baise tout en Champions League', '1', '1', NULL);
 
-INSERT INTO `golden_ticket`.`user` (`num_user`, `name_user`, `surname_user`, `login_user`, `password_user`)
-VALUES
-	(NULL, 'Jean', 'Michel', 'User1', 'toto'),
-	(NULL, 'Jean', 'Kader', 'User2', 'toto');
+insert into user values
+(null, 'Doe', 'John', 'JohnDoe', 'L2nNR5hIcinaJkKR+j4baYaZjcHS0c3WX2gjYF6Tmgl1Bs+C9Qbr+69X8eQwXDvw0vp73PrcSeT0bGEW5+T2hA==', 'YcM=A$nsYzkyeDVjEUa7W9K', 'ROLE_USER');
+/* raw password is 'jane' */
+insert into user values
+(null, 'Doe', 'Jane', 'JaneDoe', 'EfakNLxyhHy2hVJlxDmVNl1pmgjUZl99gtQ+V3mxSeD8IjeZJ8abnFIpw9QNahwAlEaXBiQUBLXKWRzOmSr8HQ==', 'dhMTBkzwDKxnD;4KNs,4ENy', 'ROLE_USER');
 
 INSERT INTO `golden_ticket`.`commentary` (`num_commentary`, `rate_commentary`, `text_commentary`, `num_event`, `num_user`)
 VALUES

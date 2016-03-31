@@ -7,9 +7,15 @@ use GoldenTicket\Domain\Commentary;
 class CommentaryDAO extends DAO
 {
     private $eventDAO;
+    
+    private $userDAO;
 
     public function setEventDAO(EventDAO $eventDAO) {
         $this->eventDAO = $eventDAO;
+    }
+    
+    public function setUserDAO(UserDAO $userDAO) {
+        $this->userDAO = $userDAO;
     }
 
     /**

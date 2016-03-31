@@ -13,11 +13,30 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
 ));
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+$app->register(new Silex\Provider\SessionServiceProvider());
+$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+    'security.firewalls' => array(
+        'secured' => array(
+            'pattern' => '^/',
+            'anonymous' => true,
+            'logout' => true,
+            'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
+            'users' => $app->share(function () use ($app) {
+                return new GoldenTicket\DAO\UserDAO($app['db']);
+            }),
+        ),
+    ),
+));
 
 // Register services.
 $app['dao.event'] = $app->share(function ($app) {
     return new GoldenTicket\DAO\EventDAO($app['db']);
 });
+
+$app['dao.user'] = $app->share(function ($app) {
+    return new GoldenTicket\DAO\UserDAO($app['db']);
+});
+
 $app['dao.commentary'] = $app->share(function ($app) {
     $commentaryDAO = new GoldenTicket\DAO\CommentaryDAO($app['db']);
     $commentaryDAO->setEventDAO($app['dao.event']);

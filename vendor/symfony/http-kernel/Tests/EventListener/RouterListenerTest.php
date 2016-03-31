@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\HttpKernel\Tests\EventListener;
 
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -111,9 +112,6 @@ class RouterListenerTest extends \PHPUnit_Framework_TestCase
                        ->will($this->returnValue(array()));
 
         $context = new RequestContext();
-        $requestMatcher->expects($this->any())
-                       ->method('getContext')
-                       ->will($this->returnValue($context));
 
         $listener = new RouterListener($requestMatcher, $this->requestStack, new RequestContext());
         $listener->onKernelRequest($event);

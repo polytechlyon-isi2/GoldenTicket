@@ -325,6 +325,13 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetFormatWithCustomMimeType()
+    {
+        $request = new Request();
+        $request->setFormat('custom', 'application/vnd.foo.api;myversion=2.3');
+        $this->assertEquals('custom', $request->getFormat('application/vnd.foo.api;myversion=2.3'));
+    }
+
     public function getFormatToMimeTypeMapProvider()
     {
         return array(
@@ -912,6 +919,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
             // invalid forwarded IP is ignored
             array(array('88.88.88.88'), '127.0.0.1', 'unknown,88.88.88.88', array('127.0.0.1')),
+            array(array('88.88.88.88'), '127.0.0.1', '}__test|O:21:&quot;JDatabaseDriverMysqli&quot;:3:{s:2,88.88.88.88', array('127.0.0.1')),
         );
     }
 
@@ -1180,25 +1188,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/path%20test/info', $request->getPathInfo());
     }
 
-    public function testGetParameterPrecedence()
-    {
-        $request = new Request();
-        $request->attributes->set('foo', 'attr');
-        $request->query->set('foo', 'query');
-        $request->request->set('foo', 'body');
-
-        $this->assertSame('attr', $request->get('foo'));
-
-        $request->attributes->remove('foo');
-        $this->assertSame('query', $request->get('foo'));
-
-        $request->query->remove('foo');
-        $this->assertSame('body', $request->get('foo'));
-
-        $request->request->remove('foo');
-        $this->assertNull($request->get('foo'));
-    }
-
     public function testGetPreferredLanguage()
     {
         $request = new Request();
@@ -1340,9 +1329,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $this->assertNull($request->setRequestFormat('foo'));
         $this->assertEquals('foo', $request->getRequestFormat(null));
-
-        $request = new Request(array('_format' => 'foo'));
-        $this->assertEquals('html', $request->getRequestFormat());
     }
 
     public function testHasSession()
@@ -1588,6 +1574,13 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(80, $request->getPort());
         $this->assertFalse($request->isSecure());
 
+        // request is forwarded by a non-trusted proxy
+        Request::setTrustedProxies(array('2.2.2.2'));
+        $this->assertEquals('3.3.3.3', $request->getClientIp());
+        $this->assertEquals('example.com', $request->getHost());
+        $this->assertEquals(80, $request->getPort());
+        $this->assertFalse($request->isSecure());
+
         // trusted proxy via setTrustedProxies()
         Request::setTrustedProxies(array('3.3.3.3', '2.2.2.2'));
         $this->assertEquals('1.1.1.1', $request->getClientIp());
@@ -1809,7 +1802,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request = Request::create('/');
         $request->headers->set('host', $host);
         $this->assertEquals($host, $request->getHost());
-        $this->assertLessThan(3, microtime(true) - $start);
+        $this->assertLessThan(5, microtime(true) - $start);
     }
 
     /**
