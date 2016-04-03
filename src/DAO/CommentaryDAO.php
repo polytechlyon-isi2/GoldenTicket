@@ -7,13 +7,13 @@ use GoldenTicket\Domain\Commentary;
 class CommentaryDAO extends DAO
 {
     private $eventDAO;
-    
+
     private $userDAO;
 
     public function setEventDAO(EventDAO $eventDAO) {
         $this->eventDAO = $eventDAO;
     }
-    
+
     public function setUserDAO(UserDAO $userDAO) {
         $this->userDAO = $userDAO;
     }
@@ -38,9 +38,16 @@ class CommentaryDAO extends DAO
         $comments = array();
         foreach ($result as $row) {
             $commentId = $row['num_commentary'];
+
+            $userId = $row['num_user'];
+            $user = $this->userDAO->find($userId);
+
+
             $comment = $this->buildDomainObject($row);
             // The associated event is defined for the constructed commentary
             $comment->setEvent($event);
+            $comment->setUser($user);
+            
             $comments[$commentId] = $comment;
         }
         return $comments;
@@ -64,6 +71,12 @@ class CommentaryDAO extends DAO
           $eventId = $row['num_event'];
           $event = $this->eventDAO->find($eventId);
           $comment->setEvent($event);
+      }
+      if (array_key_exists('num_user', $row)) {
+          // Find and set the associated article
+          $userId = $row['num_user'];
+          $user = $this->userDAO->find($userId);
+          $comment->setUser($userId);
       }
 
       return $comment;
