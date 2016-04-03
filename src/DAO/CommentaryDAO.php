@@ -47,7 +47,7 @@ class CommentaryDAO extends DAO
             // The associated event is defined for the constructed commentary
             $comment->setEvent($event);
             $comment->setUser($user);
-            
+
             $comments[$commentId] = $comment;
         }
         return $comments;
@@ -76,9 +76,34 @@ class CommentaryDAO extends DAO
           // Find and set the associated article
           $userId = $row['num_user'];
           $user = $this->userDAO->find($userId);
-          $comment->setUser($userId);
+          $comment->setUser($user);
       }
 
       return $comment;
+    }
+
+      /**
+     * Saves a comment into the database.
+     *
+     * @param \MicroCMS\Domain\Comment $comment The comment to save
+     */
+    public function save(Commentary $comment) {
+        $commentData = array(
+            'rate_commentary' => '0',
+            'text_commentary' => $comment->getText(),
+            'num_event' => $comment->getEvent()->getNum(),
+            'num_user' => $comment->getUser()->getNum()
+            );
+
+        if ($comment->getNum()) {
+            // The comment has already been saved : update it
+            $this->getDb()->update('commentary', $commentData, array('num_commentary' => $comment->getId()));
+        } else {
+            // The comment has never been saved : insert it
+            $this->getDb()->insert('commentary', $commentData);
+            // Get the id of the newly created comment and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $comment->setNum($id);
+        }
     }
 }

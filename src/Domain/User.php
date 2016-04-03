@@ -19,14 +19,14 @@ class User implements UserInterface
      * @var string
      */
     private $name;
-    
+
     /**
      * User surname.
      *
      * @var string
      */
     private $surname;
-    
+
     /**
      * User login.
      *
@@ -70,7 +70,7 @@ class User implements UserInterface
     public function getName() {
         return $this->name;
     }
-    
+
     public function getUsername() {
         return $this->login;
     }
@@ -79,7 +79,7 @@ class User implements UserInterface
     public function setName($name) {
         $this->name = $name;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -90,7 +90,7 @@ class User implements UserInterface
     public function setSurname($surname) {
         $this->surname = $surname;
     }
-    
+
     /**
      * @inheritDoc
      */

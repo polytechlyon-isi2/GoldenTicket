@@ -55,7 +55,7 @@ CREATE TABLE User
   name_user Varchar(40),
   surname_user Varchar(40),
   login_user Varchar(40),
-  password_user Varchar(40),
+  password_user Varchar(100),
   salt_user varchar(23) not null,
   role_user varchar(50) not null,
  PRIMARY KEY (num_user)
@@ -144,7 +144,7 @@ CREATE INDEX IX_Relationship29 ON Commentary (num_event)
 CREATE INDEX IX_Relationship33 ON Commentary (num_user)
 ;
 
--- Create relationships section ------------------------------------------------- 
+-- Create relationships section -------------------------------------------------
 
 ALTER TABLE PlaceCategory ADD CONSTRAINT Relationship3 FOREIGN KEY (num_event) REFERENCES Event (num_event) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
@@ -172,5 +172,3 @@ ALTER TABLE Commentary ADD CONSTRAINT Relationship29 FOREIGN KEY (num_event) REF
 
 ALTER TABLE Commentary ADD CONSTRAINT Relationship33 FOREIGN KEY (num_user) REFERENCES User (num_user) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
-
-

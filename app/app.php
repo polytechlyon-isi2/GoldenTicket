@@ -8,6 +8,8 @@ ErrorHandler::register();
 ExceptionHandler::register();
 
 // Register service providers.
+$app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new Silex\Provider\TranslationServiceProvider());
 $app->register(new Silex\Provider\DoctrineServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
@@ -40,5 +42,6 @@ $app['dao.user'] = $app->share(function ($app) {
 $app['dao.commentary'] = $app->share(function ($app) {
     $commentaryDAO = new GoldenTicket\DAO\CommentaryDAO($app['db']);
     $commentaryDAO->setEventDAO($app['dao.event']);
+    $commentaryDAO->setUserDAO($app['dao.user']);
     return $commentaryDAO;
 });
