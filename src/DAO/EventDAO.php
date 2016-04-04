@@ -7,9 +7,9 @@ use GoldenTicket\Domain\Event;
 class EventDAO extends DAO
 {
     /**
-     * Return a list of all articles, sorted by date (most recent first).
+     * Return a list of all events, sorted by date (most recent first).
      *
-     * @return array A list of all articles.
+     * @return array A list of all events.
      */
     public function findAll() {
         $sql = "select * from event";
@@ -25,9 +25,9 @@ class EventDAO extends DAO
     }
 
     /**
-     * Creates an Article object based on a DB row.
+     * Creates an Event object based on a DB row.
      *
-     * @param array $row The DB row containing Article data.
+     * @param array $row The DB row containing Event data.
      * @return \GoldenTicket\Domain\Event
      */
     protected function buildDomainObject($row) {
@@ -53,6 +53,39 @@ class EventDAO extends DAO
         if ($row)
             return $this->buildDomainObject($row);
         else
-            throw new \Exception("No article matching id " . $id);
+            throw new \Exception("No event matching id " . $id);
+    }
+
+    /**
+     * Saves an event into the database.
+     *
+     * @param \MicroCMS\Domain\Event $event The event to save
+     */
+    public function save(Event $event) {
+        $eventData = array(
+            'name_event' => $event->getName(),
+            'desc_event' => $event->getDesc(),
+            );
+
+        if ($event->getNum()) {
+            // The event has already been saved : update it
+            $this->getDb()->update('event', $eventData, array('num_event' => $event->getNum()));
+        } else {
+            // The event has never been saved : insert it
+            $this->getDb()->insert('event', $eventData);
+            // Get the id of the newly created event and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $event->setNum($id);
+        }
+    }
+
+    /**
+     * Removes an event from the database.
+     *
+     * @param integer $id The event id.
+     */
+    public function delete($id) {
+        // Delete the event
+        $this->getDb()->delete('event', array('num_event' => $id));
     }
 }

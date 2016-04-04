@@ -28,6 +28,24 @@ class UserDAO extends DAO implements UserProviderInterface
     }
 
     /**
+     * Returns a list of all users, sorted by role and name.
+     *
+     * @return array A list of all users.
+     */
+    public function findAll() {
+        $sql = "select * from user order by role_user, login_user";
+        $result = $this->getDb()->fetchAll($sql);
+
+        // Convert query result to an array of domain objects
+        $entities = array();
+        foreach ($result as $row) {
+            $id = $row['num_user'];
+            $entities[$id] = $this->buildDomainObject($row);
+        }
+        return $entities;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function loadUserByUsername($login)
@@ -78,4 +96,40 @@ class UserDAO extends DAO implements UserProviderInterface
         $user->setRole($row['role_user']);
         return $user;
     }
+
+          /**
+       * Saves a user into the database.
+       *
+       * @param \MicroCMS\Domain\User $user The user to save
+       */
+      public function save(User $user) {
+          $userData = array(
+              'login_user' => $user->getLogin(),
+              'salt_user' => $user->getSalt(),
+              'password_user' => $user->getPassword(),
+              'role_user' => $user->getRole()
+              );
+
+          if ($user->getNum()) {
+              // The user has already been saved : update it
+              $this->getDb()->update('user', $userData, array('num_user' => $user->getNum()));
+          } else {
+              // The user has never been saved : insert it
+              $this->getDb()->insert('user', $userData);
+              // Get the id of the newly created user and set it on the entity.
+              $id = $this->getDb()->lastInsertId();
+              $user->setNum($id);
+          }
+      }
+
+      /**
+       * Removes a user from the database.
+       *
+       * @param @param integer $id The user id.
+       */
+      public function delete($id) {
+          // Delete the user
+          $this->getDb()->delete('user', array('num_user' => $id));
+      }
+
 }
