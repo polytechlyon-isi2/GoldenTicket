@@ -22,6 +22,9 @@ insert into user values
 /* raw password is 'jane' */
 insert into user values
 (null, 'Doe', 'Jane', 'JaneDoe', 'EfakNLxyhHy2hVJlxDmVNl1pmgjUZl99gtQ+V3mxSeD8IjeZJ8abnFIpw9QNahwAlEaXBiQUBLXKWRzOmSr8HQ==', 'dhMTBkzwDKxnD;4KNs,4ENy', 'ROLE_USER');
+/* raw password is '@dm1n' */
+insert into user values
+(null, 'Jean', 'Michel', 'admin', 'gqeuP4YJ8hU3ZqGwGikB6+rcZBqefVy+7hTLQkOD+jwVkp4fkS7/gr1rAQfn9VUKWc7bvOD7OsXrQQN5KGHbfg==', 'EDDsl&fBCJB|a5XUtAlnQN8', 'ROLE_ADMIN');
 
 INSERT INTO `golden_ticket`.`commentary` (`num_commentary`, `rate_commentary`, `text_commentary`, `num_event`, `num_user`)
 VALUES
