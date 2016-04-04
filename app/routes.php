@@ -185,3 +185,67 @@ $app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) 
     // Redirect to admin home page
     return $app->redirect($app['url_generator']->generate('admin'));
 })->bind('admin_user_delete');
+
+
+
+
+// API : get all events
+$app->get('/api/events', function() use ($app) {
+    $events = $app['dao.event']->findAll();
+    // Convert an array of objects ($events) into an array of associative arrays ($responseData)
+    $responseData = array();
+    foreach ($events as $event) {
+        $responseData[] = array(
+            'id' => $event->getNum(),
+            'title' => $event->getName(),
+            'content' => $event->getDesc()
+            );
+    }
+    // Create and return a JSON response
+    return $app->json($responseData);
+})->bind('api_events');
+
+// API : get an event
+$app->get('/api/event/{id}', function($id) use ($app) {
+    $event = $app['dao.event']->find($id);
+    // Convert an object ($event) into an associative array ($responseData)
+    $responseData = array(
+        'id' => $event->getNum(),
+        'title' => $event->getName(),
+        'content' => $event->getDesc()
+        );
+    // Create and return a JSON response
+    return $app->json($responseData);
+})->bind('api_event');
+
+// API : create a new event
+$app->post('/api/event', function(Request $request) use ($app) {
+    // Check request parameters
+    if (!$request->request->has('name')) {
+        return $app->json('Missing required parameter: name', 400);
+    }
+    if (!$request->request->has('desc')) {
+        return $app->json('Missing required parameter: desc', 400);
+    }
+    // Build and save the new event
+    $event = new Event();
+    $event->setName($request->request->get('name'));
+    $event->setDesc($request->request->get('desc'));
+    $app['dao.event']->save($event);
+    // Convert an object ($event) into an associative array ($responseData)
+    $responseData = array(
+        'num' => $event->getNum(),
+        'name' => $event->getName(),
+        'desc' => $event->getDesc()
+        );
+    return $app->json($responseData, 201);  // 201 = Created
+})->bind('api_event_add');
+
+// API : delete an existing event
+$app->delete('/api/event/{id}', function ($id, Request $request) use ($app) {
+    // Delete all associated comments
+    $app['dao.commentary']->deleteAllByEvent($id);
+    // Delete the event
+    $app['dao.event']->delete($id);
+    return $app->json('No Content', 204);  // 204 = No content
+})->bind('api_event_delete');
