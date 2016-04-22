@@ -71,8 +71,8 @@
             }}) }}
         </div>
     </div>
-    {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
-    <div class="form-group">
+    
+    <div class="form-group" {% if app.user == false or is_granted('IS_AUTHENTICATED_FULLY') == false or is_granted('ROLE_ADMIN') == false %} style="display:none" {% endif %} >
         {{ form_label(userForm.role, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
@@ -83,7 +83,6 @@
             }}) }}
         </div>
     </div>
-    {% endif %}
     <div class="form-group">
         <div class="col-sm-offset-5 col-sm-3">
             <input type="submit" class="btn btn-primary" value="Save" />

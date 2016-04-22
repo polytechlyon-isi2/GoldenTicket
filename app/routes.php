@@ -9,6 +9,7 @@ use GoldenTicket\Domain\User;
 use GoldenTicket\Form\Type\CommentType;
 use GoldenTicket\Form\Type\EventType;
 use GoldenTicket\Form\Type\UserType;
+use GoldenTicket\Form\Type\UserTypeAdmin;
 
 // Home page
 $app->get('/', function () use ($app) {
@@ -63,6 +64,7 @@ $app->match('/sign_in', function(Request $request) use ($app) {
     $userForm = $app['form.factory']->create(new UserType(), $user);
     $userForm->handleRequest($request);
     if ($userForm->isSubmitted() && $userForm->isValid()) {
+        
         // generate a random salt value
         $salt = substr(md5(time()), 0, 23);
         $user->setSalt($salt);
@@ -75,7 +77,7 @@ $app->match('/sign_in', function(Request $request) use ($app) {
         $app['dao.user']->save($user);
         $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
     }
-    return $app['twig']->render('sign_in.html.twig', array(
+    return $app['twig']->render('user_form.html.twig', array(
         'title' => 'Sign in',
         'userForm' => $userForm->createView()));
 })->bind('sign_in');
