@@ -30,6 +30,28 @@
         </div>
     </div>
     <div class="form-group">
+        {{ form_label(userForm.name, null, { 'label_attr':  {
+            'class': 'col-sm-5 control-label'
+        }}) }}
+        <div class="col-sm-4">
+            {{ form_errors(userForm.name) }}
+            {{ form_widget(userForm.name, { 'attr':  {
+                'class': 'form-control'
+            }}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(userForm.surname, null, { 'label_attr':  {
+            'class': 'col-sm-5 control-label'
+        }}) }}
+        <div class="col-sm-4">
+            {{ form_errors(userForm.surname) }}
+            {{ form_widget(userForm.surname, { 'attr':  {
+                'class': 'form-control'
+            }}) }}
+        </div>
+    </div>
+    <div class="form-group">
         {{ form_label(userForm.password.first, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
@@ -49,6 +71,7 @@
             }}) }}
         </div>
     </div>
+    {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
     <div class="form-group">
         {{ form_label(userForm.role, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
@@ -60,6 +83,7 @@
             }}) }}
         </div>
     </div>
+    {% endif %}
     <div class="form-group">
         <div class="col-sm-offset-5 col-sm-3">
             <input type="submit" class="btn btn-primary" value="Save" />
