@@ -59,6 +59,10 @@ $app['dao.event'] = $app->share(function ($app) {
     return new GoldenTicket\DAO\EventDAO($app['db']);
 });
 
+$app['dao.type'] = $app->share(function ($app) {
+    return new GoldenTicket\DAO\TypeDAO($app['db']);
+});
+
 $app['dao.user'] = $app->share(function ($app) {
     return new GoldenTicket\DAO\UserDAO($app['db']);
 });

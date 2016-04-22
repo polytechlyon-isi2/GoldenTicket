@@ -28,6 +28,7 @@
                     <tr>
                         <th>Title</th>
                         <th>Content</th>
+                        <th>Type</th>
                         <th></th>  <!-- Actions column -->
                     </tr>
                 </thead>
@@ -35,6 +36,7 @@
                 <tr>
                     <td><a class="eventTitle" href="{{ path('event', { 'id': event.num }) }}">{{ event.name }}</a></td>
                     <td>{{ event.desc | truncate(60) }}</td>
+                    <td>{{ event.type }}</td>
                     <td>
                         <a href="{{ path('admin_event_edit', { 'id': event.num }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                         <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#eventDialog{{ event.num }}"><span class="glyphicon glyphicon-remove"></span>

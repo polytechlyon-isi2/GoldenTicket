@@ -2,6 +2,12 @@
 
 {% block title %}Home{% endblock %}
 
+{% block research %}
+{% for type in types %}
+<li><a href="{{ path('eventByType', { 'id': type.num }) }}">{{ type.name }}</a></li>
+{% endfor %}
+{% endblock %}
+
 {% block content %}
 {% for event in events %}
 <article>

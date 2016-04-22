@@ -5,6 +5,7 @@ namespace GoldenTicket\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use GoldenTicket\DAO\TypeDAO;
 
 class EventType extends AbstractType
 {
@@ -19,6 +20,9 @@ class EventType extends AbstractType
             ->add('startHour', 'time')
             ->add('endHour', 'time')
             ->add('type', 'choice', array(
+            'choices' => TypeDAO::findAll()))
+            
+            /*'type', 'choice', array(
                       'choices'  => array(
                           'Maybe' => null,
                           'Yes' => true,
@@ -26,7 +30,7 @@ class EventType extends AbstractType
                       ),
                       // *this line is important*
                       'choices_as_values' => true,
-                  ))
+                  ))*/
             ->add('coverImageLink', 'file');
 
     }

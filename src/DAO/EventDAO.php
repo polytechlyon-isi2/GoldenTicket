@@ -40,12 +40,45 @@ class EventDAO extends DAO
         $event->setEndDate($row['endDate_event']);
         $event->setEndHour($row['endHour_event']);
         $event->setDesc($row['desc_event']);
-        $event->setType($row['num_ET']);
+        $type = $this->findType($row['num_ET']);
+        $event->setType($type);
         $event->setStatus($row['num_status']);
         $event->setCoverImageLink($row['coverImage_event']);
         return $event;
     }
 
+    
+    public function findType($id)
+    {
+        $sql = "select * from eventtype where num_ET=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
+        return $row['name_ET'];
+    }
+    
+    
+    public function findAllTypes()
+    {
+        $sql = "select * from eventtype";
+        $types = $this->getDb()->fetchAssoc($sql);
+        return $types;
+    }
+    
+    
+    public function findByType($num_ET) {
+        $sql = "select * from event where num_ET=?";
+        $result = $this->getDb()->fetchAll($sql, array($num_ET));
+
+         $events = array();
+        foreach ($result as $row) {
+            $eventId = $row['num_event'];
+            $events[$eventId] = $this->buildDomainObject($row);
+        }
+        return $events;
+    }
+
+    
+    
+    
     public function find($id) {
         $sql = "select * from event where num_event=?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));

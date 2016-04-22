@@ -14,15 +14,10 @@ use GoldenTicket\Form\Type\UserTypeAdmin;
 // Home page
 $app->get('/', function () use ($app) {
     $events = $app['dao.event']->findAll();
-    return $app['twig']->render('index.html.twig', array('events' => $events));
+    $types = $app['dao.type']->findAll();
+    return $app['twig']->render('index.html.twig', array('events' => $events, 'types' => $types));
 })->bind('home');
 
-// Event details with comments
-//$app->get('/event/{id}', function ($id) use ($app) {
-//    $event = $app['dao.event']->find($id);
-//    $comments = $app['dao.commentary']->findAllByEvent($id);
-//    return $app['twig']->render('event.html.twig', array('event' => $event, 'comments' => $comments));
-//})->bind('event');
 
 // Event details with comments
 $app->match('/event/{id}', function ($id, Request $request) use ($app) {
@@ -48,6 +43,19 @@ $app->match('/event/{id}', function ($id, Request $request) use ($app) {
         'comments' => $comments,
         'commentForm' => $commentFormView));
 })->bind('event');
+
+
+
+// Events by type
+$app->match('/type/{id}', function ($id, Request $request) use ($app) {
+    $events = $app['dao.event']->findByType($id);
+     $types = $app['dao.type']->findAll();
+    return $app['twig']->render('typeEvent.html.twig', array(
+        'events' => $events, 'types' => $types));
+})->bind('eventByType');
+
+
+
 
 // Login form
 $app->get('/login', function(Request $request) use ($app) {

@@ -1,0 +1,19 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block research %}
+{% for type in types %}
+<li><a href="{{ path('eventByType', { 'id': type.num }) }}">{{ type.name }}</a></li>
+{% endfor %}
+{% endblock %}
+
+{% block content %}
+{% for event in events %}
+<article>
+
+    <h2><a class="eventTitle" href="{{ path('event', { 'id': event.num }) }}">{{ event.name }}</a></h2>
+    <p>{{ event.desc }}</p>
+</article>
+{% endfor %}
+{% endblock %}
