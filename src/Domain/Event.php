@@ -105,7 +105,13 @@ class Event
     }
 
     public function setStartDate($startDate) {
-        $this->startDate = $startDate;
+        if (!is_string($startDate)) {
+          $result = $startDate->format('Y-m-d');
+          $this->startDate = $result;
+        }
+        else{
+          $this->startDate = $startDate;
+        }
     }
 
 		public function getEndDate() {
@@ -113,7 +119,13 @@ class Event
     }
 
     public function setEndDate($endDate) {
-        $this->endDate = $endDate;
+        if (!is_string($endDate)) {
+          $result = $endDate->format('Y-m-d');
+          $this->endDate = $result;
+        }
+        else{
+          $this->endDate = $endDate;
+        }
     }
 
 		public function getStartHour() {
@@ -121,7 +133,13 @@ class Event
     }
 
     public function setStartHour($startHour) {
-        $this->startHour = $startHour;
+        if (!is_string($startHour)) {
+          $result = $startHour->format('H:i');
+          $this->startHour = $result;
+        }
+        else{
+          $this->startHour = $startHour;
+        }
     }
 
 		public function getEndHour() {
@@ -129,7 +147,13 @@ class Event
     }
 
     public function setEndHour($endHour) {
+      if (!is_string($endHour)) {
+        $result = $endHour->format('H:i');
+        $this->endHour = $result;
+      }
+      else{
         $this->endHour = $endHour;
+      }
     }
 
 		public function getDesc() {

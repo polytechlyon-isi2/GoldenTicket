@@ -65,6 +65,11 @@ class EventDAO extends DAO
         $eventData = array(
             'name_event' => $event->getName(),
             'desc_event' => $event->getDesc(),
+            'minimalPrice_event' => $event->getMinimalPrice(),
+            'startDate_event' => $event->getStartDate(),
+            'endDate_event' => $event->getEndDate(),
+            'startHour_event' => $event->getStartHour(),
+            'endHour_event' => $event->getEndHour(),
             );
 
         if ($event->getNum()) {
