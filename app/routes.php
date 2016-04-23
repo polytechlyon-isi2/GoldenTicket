@@ -72,7 +72,7 @@ $app->match('/sign_in', function(Request $request) use ($app) {
     $userForm = $app['form.factory']->create(new UserType(), $user);
     $userForm->handleRequest($request);
     if ($userForm->isSubmitted() && $userForm->isValid()) {
-        
+
         // generate a random salt value
         $salt = substr(md5(time()), 0, 23);
         $user->setSalt($salt);
@@ -103,10 +103,18 @@ $app->get('/admin', function() use ($app) {
         'users' => $users));
 })->bind('admin');
 
+
+
+
+
+
+
 // Add a new event
 $app->match('/admin/event/add', function(Request $request) use ($app) {
     $event = new Event();
-    $eventForm = $app['form.factory']->create(new EventType(), $event);
+    $types= $app['dao.type']->findAllSelectList();
+
+    $eventForm = $app['form.factory']->create(new EventType($types), $event);
     $eventForm->handleRequest($request);
     if ($eventForm->isSubmitted() && $eventForm->isValid()) {
         $app['dao.event']->save($event);

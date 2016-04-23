@@ -25,6 +25,20 @@ class TypeDAO extends DAO
           return $entities;
       }
 
+      public function findAllSelectList() {
+          $sql = "select * from eventtype order by num_ET";
+          $result = $this->getDb()->fetchAll($sql);
+
+          // Convert query result to an array of domain objects
+          $entities = array();
+          foreach ($result as $row) {
+              $id = $row['num_ET'];
+              $typeName = $row['name_ET'];
+              $entities[$id] = $typeName;
+          }
+          return $entities;
+      }
+
       /**
        * Creates a Comment object based on a DB row.
        *
@@ -63,7 +77,7 @@ class TypeDAO extends DAO
               $comment->setNum($id);
           }*/
       }
-    
+
 
         /**
        * Returns a comment matching the supplied id.

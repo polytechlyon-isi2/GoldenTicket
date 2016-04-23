@@ -47,23 +47,23 @@ class EventDAO extends DAO
         return $event;
     }
 
-    
+
     public function findType($id)
     {
         $sql = "select * from eventtype where num_ET=?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));
         return $row['name_ET'];
     }
-    
-    
+
+
     public function findAllTypes()
     {
         $sql = "select * from eventtype";
         $types = $this->getDb()->fetchAssoc($sql);
         return $types;
     }
-    
-    
+
+
     public function findByType($num_ET) {
         $sql = "select * from event where num_ET=?";
         $result = $this->getDb()->fetchAll($sql, array($num_ET));
@@ -76,9 +76,9 @@ class EventDAO extends DAO
         return $events;
     }
 
-    
-    
-    
+
+
+
     public function find($id) {
         $sql = "select * from event where num_event=?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));
@@ -103,6 +103,7 @@ class EventDAO extends DAO
             'endDate_event' => $event->getEndDate(),
             'startHour_event' => $event->getStartHour(),
             'endHour_event' => $event->getEndHour(),
+            'num_ET' => $event->getType()
             );
 
         if ($event->getNum()) {

@@ -9,8 +9,17 @@ use GoldenTicket\DAO\TypeDAO;
 
 class EventType extends AbstractType
 {
+    private $types;
+
+    public function __construct($types)
+    {
+        $this->types = $types;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        var_dump($this->types);
+
         $builder
             ->add('name', 'text')
             ->add('desc', 'textarea')
@@ -20,19 +29,8 @@ class EventType extends AbstractType
             ->add('startHour', 'time')
             ->add('endHour', 'time')
             ->add('type', 'choice', array(
-            'choices' => TypeDAO::findAll()))
-            
-            /*'type', 'choice', array(
-                      'choices'  => array(
-                          'Maybe' => null,
-                          'Yes' => true,
-                          'No' => false,
-                      ),
-                      // *this line is important*
-                      'choices_as_values' => true,
-                  ))*/
+                      'choices' => $this->types))
             ->add('coverImageLink', 'file');
-
     }
 
     public function getName()
