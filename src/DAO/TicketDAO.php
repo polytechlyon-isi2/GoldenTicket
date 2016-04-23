@@ -3,6 +3,7 @@
 namespace GoldenTicket\DAO;
 
 use GoldenTicket\Domain\Ticket;
+use GoldenTicket\Domain\User;
 
 class TicketDAO extends DAO
 {
@@ -48,7 +49,7 @@ class TicketDAO extends DAO
        *
        * @param \MicroCMS\Domain\User $user The user to save
        */
-      public function save(Ticket $ticket) {
+      public function save(Ticket $ticket, User $user) {
           $ticketData = array(
               'num_ticket' => $ticket->getNum(),
               'num_event' => $ticket->getEvent()->getNum(),
@@ -64,6 +65,16 @@ class TicketDAO extends DAO
               // Get the id of the newly created user and set it on the entity.
               $id = $this->getDb()->lastInsertId();
               $ticket->setNum($id);
+              
+              $sql = "select num_order from order_gd where num_user = ?";
+              $row = $this->getDb()->fetchAssoc($sql, array($user->getNum()));
+              if($row) {
+                  $this->getDb()->insert('ticketsbyorder', array(
+                  'num_ticket' => $ticket->getNum(), 'num_order' => $row['num_order']));
+              }
+              else {
+                  throw new \Exception("No order matching id " . $row['num_order']);
+              }
           }
       }
 

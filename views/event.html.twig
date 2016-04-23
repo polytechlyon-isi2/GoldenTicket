@@ -17,6 +17,29 @@
                 <p><small>{{ event.desc }}</small></p>
             </div>
         </div>
+        <div class = "row">
+            {% if ticketForm %}
+            {{ form_start(ticketForm) }}
+            <div class="form-group">
+            {{ form_errors(ticketForm.num_place) }}
+            {{ form_widget(ticketForm.num_place, { 'attr':  {
+                'class': 'form-control',
+                'rows': '4'
+            }}) }}
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Command a ticket" />
+             </div>
+                {{ form_end(ticketForm) }}
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <a href="{{ path('login') }} ">Log in</a> to buy a ticket.
+            {% endif %}
+        </div>
     </div>
 
 

@@ -6,21 +6,21 @@ namespace GoldenTicket\Domain;
 class Ticket
 {
     /**
-     * User num.
+     * Ticket num.
      *
      * @var integer
      */
     private $num;
 
     /**
-     * User name.
+     * Ticket event.
      *
      * @var string
      */
     private $event;
 
     /**
-     * User surname.
+     * Ticket place num.
      *
      * @var string
      */
@@ -36,7 +36,7 @@ class Ticket
     }
 
     /**
-     * @inheritDoc
+     * @
      */
     public function getEvent() {
         return $this->event;
@@ -45,10 +45,16 @@ class Ticket
     public function getNumPlace() {
         return $this->num_place;
     }
+    
+    public function setNumPlace($num) {
+        $this->num_place = $num;
+    }
 
 
     public function setEvent($event) {
         $this->event = $event;
     }
+    
+    
 
 }

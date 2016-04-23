@@ -5,11 +5,12 @@ use Symfony\Component\HttpFoundation\Request;
 use GoldenTicket\Domain\Commentary;
 use GoldenTicket\Domain\Event;
 use GoldenTicket\Domain\User;
+use GoldenTicket\Domain\Ticket;
 
 use GoldenTicket\Form\Type\CommentType;
 use GoldenTicket\Form\Type\EventType;
 use GoldenTicket\Form\Type\UserType;
-use GoldenTicket\Form\Type\UserTypeAdmin;
+use GoldenTicket\Form\Type\TicketType;
 
 // Home page
 $app->get('/', function () use ($app) {
@@ -23,11 +24,22 @@ $app->get('/', function () use ($app) {
 $app->match('/event/{id}', function ($id, Request $request) use ($app) {
     $event = $app['dao.event']->find($id);
     $commentFormView = null;
+    $ticketFormView = null;
+    $user = $app['user'];
     if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
-        // A user is fully authenticated : he can add comments
+        // A user is fully authenticated : he can add comments and commands
+        $ticket = new Ticket();
+        $ticket->setEvent($event);
+        $ticketForm = $app['form.factory']->create(new TicketType(), $ticket);
+        $ticketForm->handleRequest($request);
+        if ($ticketForm->isSubmitted() && $ticketForm->isValid()) {
+            $app['dao.ticket']->save($ticket, $user);
+            $app['session']->getFlashBag()->add('success', 'Your command was succesfully added.');
+        }
+        $ticketFormView = $ticketForm->createView();
+            
         $comment = new Commentary();
         $comment->setEvent($event);
-        $user = $app['user'];
         $comment->setUser($user);
         $commentForm = $app['form.factory']->create(new CommentType(), $comment);
         $commentForm->handleRequest($request);
@@ -41,9 +53,19 @@ $app->match('/event/{id}', function ($id, Request $request) use ($app) {
     return $app['twig']->render('event.html.twig', array(
         'event' => $event,
         'comments' => $comments,
-        'commentForm' => $commentFormView));
+        'commentForm' => $commentFormView,
+        'ticketForm' => $ticketFormView));
 })->bind('event');
 
+
+//Panier
+$app->get('/panier', function() use ($app) {
+    $events = $app['dao.event']->findAll();
+    return $app['twig']->render('panier.html.twig', array(
+        'events' => $events,
+        'comments' => $comments,
+        'users' => $users));
+})->bind('admin');
 
 
 // Events by type
@@ -102,8 +124,6 @@ $app->get('/admin', function() use ($app) {
         'comments' => $comments,
         'users' => $users));
 })->bind('admin');
-
-
 
 
 
