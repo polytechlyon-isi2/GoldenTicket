@@ -5,6 +5,9 @@ namespace GoldenTicket\Controller;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use GoldenTicket\Domain\Commentary;
 use GoldenTicket\Domain\Event;
 use GoldenTicket\Domain\User;
@@ -45,12 +48,11 @@ class AdminController {
         $eventForm = $app['form.factory']->create(new EventType($types), $event);
         $eventForm->handleRequest($request);
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
-            var_dump($event->getCoverImageLink());
             $file = $event->getCoverImageLink();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            var_dump($fileName);
-            //$path = $this->get('kernel')->getRootDir() . '/../web';
-            var_dump($this->get('kernel')->getRootDir());
+            $fileName = md5(uniqid()).'.'.$file->getClientOriginalExtension();
+            $path = $_SERVER['DOCUMENT_ROOT'] . '/GoldenTicket/web/images';
+            $file->move($path, $fileName);
+            $event->setCoverImageLink($fileName);
             $app['dao.event']->save($event);
             $app['session']->getFlashBag()->add('success', 'The event was successfully created.');
         }
