@@ -205,7 +205,7 @@ class Event
     }
 
 		public function getCoverImageLink() {
-        return $this->status;
+        return $this->coverImageLink;
     }
 
     public function setCoverImageLink($coverImageLink) {
