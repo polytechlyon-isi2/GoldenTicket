@@ -4,11 +4,17 @@ namespace GoldenTicket\Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
+
+use GoldenTicket\Domain\Commentary;
 use GoldenTicket\Domain\Event;
 use GoldenTicket\Domain\User;
-use GoldenTicket\Form\Type\EventType;
+
 use GoldenTicket\Form\Type\CommentType;
+use GoldenTicket\Form\Type\EventType;
 use GoldenTicket\Form\Type\UserType;
+use GoldenTicket\Form\Type\UserTypeAdmin;
+
+
 
 class AdminController {
 
@@ -35,9 +41,16 @@ class AdminController {
      */
     public function addEventAction(Request $request, Application $app) {
         $event = new Event();
-        $eventForm = $app['form.factory']->create(new EventType(), $event);
+        $types= $app['dao.type']->findAllSelectList();
+        $eventForm = $app['form.factory']->create(new EventType($types), $event);
         $eventForm->handleRequest($request);
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
+            var_dump($event->getCoverImageLink());
+            $file = $event->getCoverImageLink();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            var_dump($fileName);
+            //$path = $this->get('kernel')->getRootDir() . '/../web';
+            var_dump($this->get('kernel')->getRootDir());
             $app['dao.event']->save($event);
             $app['session']->getFlashBag()->add('success', 'The event was successfully created.');
         }
@@ -54,8 +67,9 @@ class AdminController {
      * @param Application $app Silex application
      */
     public function editEventAction($id, Request $request, Application $app) {
+        $types= $app['dao.type']->findAllSelectList();
         $event = $app['dao.event']->find($id);
-        $eventForm = $app['form.factory']->create(new EventType(), $event);
+        $eventForm = $app['form.factory']->create(new EventType($types), $event);
         $eventForm->handleRequest($request);
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
             $app['dao.event']->save($event);

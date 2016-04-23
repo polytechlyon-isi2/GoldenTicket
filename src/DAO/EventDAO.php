@@ -95,8 +95,6 @@ class EventDAO extends DAO
      * @param \MicroCMS\Domain\Event $event The event to save
      */
     public function save(Event $event) {
-        var_dump($_POST);
-        var_dump($event->getCoverImageLink());
         $eventData = array(
             'name_event' => $event->getName(),
             'desc_event' => $event->getDesc(),
