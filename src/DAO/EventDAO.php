@@ -95,6 +95,8 @@ class EventDAO extends DAO
      * @param \MicroCMS\Domain\Event $event The event to save
      */
     public function save(Event $event) {
+        var_dump($_POST);
+        var_dump($event->getCoverImageLink());
         $eventData = array(
             'name_event' => $event->getName(),
             'desc_event' => $event->getDesc(),
@@ -103,9 +105,9 @@ class EventDAO extends DAO
             'endDate_event' => $event->getEndDate(),
             'startHour_event' => $event->getStartHour(),
             'endHour_event' => $event->getEndHour(),
-            'num_ET' => $event->getType()
+            'num_ET' => $event->getType(),
+            'coverImage_event' => $event->getCoverImageLink(),
             );
-
         if ($event->getNum()) {
             // The event has already been saved : update it
             $this->getDb()->update('event', $eventData, array('num_event' => $event->getNum()));

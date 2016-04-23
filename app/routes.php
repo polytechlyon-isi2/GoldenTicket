@@ -113,7 +113,6 @@ $app->get('/admin', function() use ($app) {
 $app->match('/admin/event/add', function(Request $request) use ($app) {
     $event = new Event();
     $types= $app['dao.type']->findAllSelectList();
-
     $eventForm = $app['form.factory']->create(new EventType($types), $event);
     $eventForm->handleRequest($request);
     if ($eventForm->isSubmitted() && $eventForm->isValid()) {
@@ -127,8 +126,9 @@ $app->match('/admin/event/add', function(Request $request) use ($app) {
 
 // Edit an existing event
 $app->match('/admin/event/{id}/edit', function($id, Request $request) use ($app) {
+    $types= $app['dao.type']->findAllSelectList();
     $event = $app['dao.event']->find($id);
-    $eventForm = $app['form.factory']->create(new EventType(), $event);
+    $eventForm = $app['form.factory']->create(new EventType($types), $event);
     $eventForm->handleRequest($request);
     if ($eventForm->isSubmitted() && $eventForm->isValid()) {
         $app['dao.event']->save($event);

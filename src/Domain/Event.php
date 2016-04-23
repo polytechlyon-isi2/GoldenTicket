@@ -101,59 +101,83 @@ class Event
     }
 
 		public function getStartDate() {
+        //$date = date_create_from_format('Y-m-d', $this->startDate);
+        //return $date;
+
         return $this->startDate;
     }
 
+    public function getStartDateS() {
+        var_dump($this->startDate);
+        $result = $this->startDate->format('Y-m-d');
+        return $result;
+        var_dump($result);
+        //return $this->startDate;
+    }
+
     public function setStartDate($startDate) {
-        if (!is_string($startDate)) {
+        /*if (!is_string($startDate)) {
           $result = $startDate->format('Y-m-d');
           $this->startDate = $result;
         }
         else{
           $this->startDate = $startDate;
-        }
+        }*/
+
+        $this->startDate = $startDate;
     }
 
 		public function getEndDate() {
+        /*$date = date_create_from_format('Y-m-d', $this->endDate);
+        return $date;*/
+
         return $this->endDate;
     }
 
     public function setEndDate($endDate) {
-        if (!is_string($endDate)) {
+        /*if (!is_string($endDate)) {
           $result = $endDate->format('Y-m-d');
           $this->endDate = $result;
         }
         else{
           $this->endDate = $endDate;
-        }
+        }*/
+
+        $this->endDate = $endDate;
     }
 
 		public function getStartHour() {
+        /*$time = date_create_from_format('H:i:s', $this->startHour);
+        return $time;*/
         return $this->startHour;
     }
 
     public function setStartHour($startHour) {
-        if (!is_string($startHour)) {
+        /*if (!is_string($startHour)) {
           $result = $startHour->format('H:i');
           $this->startHour = $result;
         }
         else{
           $this->startHour = $startHour;
-        }
+        }*/
+        $this->startHour = $startHour;
     }
 
 		public function getEndHour() {
+        /*$time = date_create_from_format('H:i:s', $this->endHour);
+        return $time;*/
         return $this->endHour;
     }
 
     public function setEndHour($endHour) {
-      if (!is_string($endHour)) {
+      /*if (!is_string($endHour)) {
         $result = $endHour->format('H:i');
         $this->endHour = $result;
       }
       else{
         $this->endHour = $endHour;
-      }
+      }*/
+      $this->endHour = $endHour;
     }
 
 		public function getDesc() {

@@ -18,16 +18,27 @@ class EventType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        var_dump($this->types);
-
         $builder
             ->add('name', 'text')
             ->add('desc', 'textarea')
             ->add('minimalPrice', 'number')
-            ->add('startDate', 'date')
-            ->add('endDate', 'date')
-            ->add('startHour', 'time')
-            ->add('endHour', 'time')
+            //->add('startDate', 'date')
+            ->add('startDate', 'date', array(
+                'input'  => 'string',
+                'widget' => 'choice',
+            ))
+            ->add('endDate', 'date', array(
+                'input'  => 'string',
+                'widget' => 'choice',
+            ))
+            ->add('startHour', 'time', array(
+                'input'  => 'string',
+                'widget' => 'choice',
+            ))
+            ->add('endHour', 'time', array(
+                'input'  => 'string',
+                'widget' => 'choice',
+            ))
             ->add('type', 'choice', array(
                       'choices' => $this->types))
             ->add('coverImageLink', 'file');
