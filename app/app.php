@@ -74,6 +74,10 @@ $app['dao.commentary'] = $app->share(function ($app) {
     return $commentaryDAO;
 });
 
+$app['dao.ticket'] = $app->share(function ($app) {
+    return new GoldenTicket\DAO\TicketDAO($app['db']);
+});
+
 // Register error handler
 $app->error(function (\Exception $e, $code) use ($app) {
     switch ($code) {
