@@ -15,6 +15,12 @@ $app->get('/login', "GoldenTicket\Controller\HomeController::loginAction")->bind
 //sign in form
 $app->get('/sign_in', "GoldenTicket\Controller\HomeController::signInAction")->bind('sign_in');
 
+//Delete a ticket
+$app->get('/panier/{id}/delete', "GoldenTicket\Controller\HomeController::deleteTicketAction")->bind('ticket_delete');
+
+//Panier zone
+$app->get('/panier', "GoldenTicket\Controller\HomeController::panierAction")->bind('panier');
+
 // Admin zone
 $app->get('/admin', "GoldenTicket\Controller\AdminController::indexAction")->bind('admin');
 

@@ -83,6 +83,35 @@ class HomeController {
           'commentForm' => $commentFormView,
           'ticketForm' => $ticketFormView));
     }
+    
+    
+    /**
+     * Delete ticket controller.
+     *
+     * @param integer $id ticket id
+     * @param Application $app Silex application
+     */
+    public function deleteTicketAction($id, Application $app) {
+        // Delete the event
+        $app['dao.ticket']->delete($id);
+        $app['session']->getFlashBag()->add('success', 'The ticket was succesfully removed.');
+        // Redirect to panier page
+        return $app->redirect($app['url_generator']->generate('panier'));
+    }
+    
+    /**
+     * User Panier controller.
+     *
+     * @param Application $app Silex application
+     */
+    public function panierAction(Application $app) {
+        //Find every tickets ordered by the user
+        $user = $app['user'];
+        $tickets = $app['dao.ticket']->findByUser($user);
+    return $app['twig']->render('panier.html.twig', array(
+        'tickets' => $tickets));
+    }
+    
 
     /**
      * User login controller.

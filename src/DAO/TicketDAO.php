@@ -9,6 +9,11 @@ class TicketDAO extends DAO
 {
     private $eventDAO;
     
+    public function setEventDAO(EventDAO $eventDAO) {
+        $this->eventDAO = $eventDAO;
+    }
+    
+    
     /**
      * Returns a ticket matching the supplied num.
      *
@@ -25,6 +30,21 @@ class TicketDAO extends DAO
         else
             throw new \Exception("No ticket matching num " . $num);
     }
+    
+    public function findByUser(User $user) {
+        $sql = "select num_order from order_gd where num_user=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($user->getNum()));
+        $sql = "select num_ticket from ticketsbyorder where num_order=?";
+        $result = $this->getDb()->fetchAll($sql, array($row['num_order']));
+        $tickets = array();
+        foreach($result as $row) {
+            $num_ticket = $row['num_ticket'];
+            $sql = "select * from ticket where num_ticket=?";
+            $row_ticket = $this->getDb()->fetchAssoc($sql, array($num_ticket));
+            $tickets[$num_ticket] = $this->buildDomainObject($row_ticket);
+        }
+        return $tickets;
+    }
 
     
 
@@ -35,13 +55,24 @@ class TicketDAO extends DAO
      * @return \MicroCMS\Domain\User
      */
     protected function buildDomainObject($row) {
-        $ticket = new User();
+        $ticket = new Ticket();
         $ticket->setNum($row['num_ticket']);
         $event_id = $row['num_event'];
-        $event = $this->eventDAO->find($event_id);
+        //$event = $this->eventDAO->find($event_id);
+        //$eventDAO = new EventDAO($this->getDb());
+        $event = $this->findEvent($event_id);
         $ticket->setEvent($event);
+        
         $ticket->setNumPlace($row['numPlace_ticket']);
         return $ticket;
+    }
+    
+    
+    public function findEvent($id)
+    {
+        $sql = "select * from event where num_event=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
+        return $row['name_event'];
     }
 
           /**
@@ -84,7 +115,8 @@ class TicketDAO extends DAO
        * @param @param integer $id The user id.
        */
       public function delete($id) {
-          // Delete the user
+          // Delete the ticket
+          $this->getDb()->delete('ticketsbyorder', array('num_ticket' => $id));
           $this->getDb()->delete('ticket', array('num_ticket' => $id));
       }
 

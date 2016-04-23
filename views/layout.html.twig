@@ -31,7 +31,7 @@
                             </ul>
                         </li>
                         {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <li><a href=""><span class="glyphicon glyphicon-cog"></span> Votre panier</a></li>
+                        <li><a href="{{ path('panier') }}"><span class="glyphicon glyphicon-shopping-cart"></span> Votre panier</a></li>
                             {% if app.user and is_granted('ROLE_ADMIN') %}
                               <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ path('admin') }}"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
                             {% endif %}

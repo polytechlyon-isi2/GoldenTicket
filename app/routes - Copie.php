@@ -60,7 +60,7 @@ $app->match('/event/{id}', function ($id, Request $request) use ($app) {
 
 
 //Panier
-$app->get('/panier', function() use ($app) {
+$app->get('/panier/{id}', function() use ($app) {
     $events = $app['dao.event']->findAll();
     return $app['twig']->render('panier.html.twig', array(
         'events' => $events,
