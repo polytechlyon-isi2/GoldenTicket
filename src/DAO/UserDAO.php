@@ -121,6 +121,9 @@ class UserDAO extends DAO implements UserProviderInterface
               // Get the id of the newly created user and set it on the entity.
               $id = $this->getDb()->lastInsertId();
               $user->setNum($id);
+              //Insertion of an order linked to the user
+              $this->getDb()->insert('order_gd', array(
+              'num_user' => $user->getNum()));
           }
       }
 
