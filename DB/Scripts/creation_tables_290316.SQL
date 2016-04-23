@@ -1,6 +1,6 @@
-/*
+﻿/*
 Created: 08/03/2016
-Modified: 22/03/2016
+Modified: 23/04/2016
 Model: MySQL 5.5
 Database: MySQL 5.5
 */
@@ -12,14 +12,13 @@ Database: MySQL 5.5
 CREATE TABLE Ticket
 (
   num_ticket Int NOT NULL AUTO_INCREMENT,
-  num_PC Int,
+  num_event Int,
   numPlace_ticket Int,
-  placement_ticket Varchar(20),
  PRIMARY KEY (num_ticket)
 )
 ;
 
-CREATE INDEX IX_Relationship4 ON Ticket (num_PC)
+CREATE INDEX IX_Relationship37 ON Ticket (num_event)
 ;
 
 -- Table Event
@@ -29,10 +28,10 @@ CREATE TABLE Event
   num_event Int NOT NULL AUTO_INCREMENT,
   name_event Varchar(100),
   minimalPrice_event Int,
-  startDate_event Varchar(255),
-  startHour_event Varchar(255),
-  endDate_event Varchar(255),
-  endHour_event Varchar(255),
+  startDate_event Date,
+  startHour_event Time,
+  endDate_event Date,
+  endHour_event Time,
   desc_event Text,
   num_status Int,
   num_ET Int,
@@ -52,12 +51,12 @@ CREATE INDEX IX_Relationship23 ON Event (num_ET)
 CREATE TABLE User
 (
   num_user Int NOT NULL AUTO_INCREMENT,
-  name_user Varchar(40),
-  surname_user Varchar(40),
-  login_user Varchar(40),
-  password_user Varchar(100),
-  salt_user varchar(23) not null,
-  role_user varchar(50) not null,
+  name_user Varchar(40) NOT NULL,
+  surname_user Varchar(40) NOT NULL,
+  login_user Varchar(40) NOT NULL,
+  password_user Varchar(100) NOT NULL,
+  salt_user Varchar(23) NOT NULL,
+  role_user Varchar(50) NOT NULL,
  PRIMARY KEY (num_user)
 )
 ;
@@ -144,12 +143,9 @@ CREATE INDEX IX_Relationship29 ON Commentary (num_event)
 CREATE INDEX IX_Relationship33 ON Commentary (num_user)
 ;
 
--- Create relationships section -------------------------------------------------
+-- Create relationships section ------------------------------------------------- 
 
 ALTER TABLE PlaceCategory ADD CONSTRAINT Relationship3 FOREIGN KEY (num_event) REFERENCES Event (num_event) ON DELETE NO ACTION ON UPDATE NO ACTION
-;
-
-ALTER TABLE Ticket ADD CONSTRAINT Relationship4 FOREIGN KEY (num_PC) REFERENCES PlaceCategory (num_PC) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 ALTER TABLE TicketsByOrder ADD CONSTRAINT Relationship18 FOREIGN KEY (num_ticket) REFERENCES Ticket (num_ticket) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -172,3 +168,8 @@ ALTER TABLE Commentary ADD CONSTRAINT Relationship29 FOREIGN KEY (num_event) REF
 
 ALTER TABLE Commentary ADD CONSTRAINT Relationship33 FOREIGN KEY (num_user) REFERENCES User (num_user) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
+
+ALTER TABLE Ticket ADD CONSTRAINT Relationship37 FOREIGN KEY (num_event) REFERENCES Event (num_event) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+
