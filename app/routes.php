@@ -42,6 +42,15 @@ $app->match('/admin/user/{id}/edit', "GoldenTicket\Controller\AdminController::e
 // Remove a user
 $app->get('/admin/user/{id}/delete', "GoldenTicket\Controller\AdminController::deleteUserAction")->bind('admin_user_delete');
 
+// Add a type
+$app->match('/admin/type/add', "GoldenTicket\Controller\AdminController::addTypeAction")->bind('admin_type_add');
+
+// Edit an existing type
+$app->match('/admin/type/{id}/edit', "GoldenTicket\Controller\AdminController::editTypeAction")->bind('admin_type_edit');
+
+// Remove a type
+$app->get('/admin/type/{id}/delete', "GoldenTicket\Controller\AdminController::deleteTypeAction")->bind('admin_type_delete');
+
 // API : get all events
 $app->get('/api/events', "GoldenTicket\Controller\ApiController::getEventsAction")->bind('api_events');
 

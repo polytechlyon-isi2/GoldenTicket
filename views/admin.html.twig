@@ -16,6 +16,7 @@
             <li class="active"><a href="#events" data-toggle="tab">Events</a></li>
             <li><a href="#comments" data-toggle="tab">Comments</a></li>
             <li><a href="#users" data-toggle="tab">Users</a></li>
+            <li><a href="#types" data-toggle="tab">Types</a></li>
         </ul>
     </div>
 </div>
@@ -175,5 +176,54 @@
           {% endif %}
           <a href="{{ path('admin_user_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add user</button></a>
     </div>
+
+    <div class="tab-pane fade adminTable" id="types">
+      {% if types %}
+          <div class="table-responsive">
+              <table class="table table-hover table-condensed">
+                  <thead>
+                      <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th></th>  <!-- Actions column -->
+                      </tr>
+                  </thead>
+                  {% for type in types %}
+                  <tr>
+                      <td>{{ type.num }}</td>
+                      <td>{{ type.name }}</td>
+                      <td>
+                          <a href="{{ path('admin_type_edit', { 'id': type.num }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                          <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#typeDialog{{ type.num }}"><span class="glyphicon glyphicon-remove"></span>
+                          </button>
+                          <div class="modal fade" id="typeDialog{{ type.num }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                          <h4 class="modal-title" id="myModalLabel">Confirmation needed</h4>
+                                      </div>
+                                      <div class="modal-body">
+                                          Do you really want to delete this type ?
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                          <a href="{{ path('admin_type_delete', { 'id': type.num }) }}" class="btn btn-danger">Confirm</a>
+                                      </div>
+                                  </div><!-- /.modal-content -->
+                              </div><!-- /.modal-dialog -->
+                          </div><!-- /.modal -->
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </table>
+          </div>
+          {% else %}
+          <div class="alert alert-warning">No users found.</div>
+          {% endif %}
+          <a href="{{ path('admin_type_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add type</button></a>
+    </div>
+
+
 </div>
 {% endblock %}
