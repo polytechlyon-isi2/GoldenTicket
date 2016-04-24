@@ -1,5 +1,5 @@
 body {
-    padding-top: 50px;
+    padding-top: 100px;
 }
 
 .footer {
@@ -20,4 +20,32 @@ body {
 #errorPanel {
     padding-top: 30px;
     padding-bottom: 10px;
+}
+
+
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}
+
+.containerGT .navbar-brand {
+  height: 80px;
+}
+
+.containerGT .nav >li >a {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.containerGT .navbar-toggle {
+  padding: 10px;
+  margin: 25px 15px 25px 0;
+}
+
+#content{
+  margin-left: 2%;
+  margin-right: 2%;
 }

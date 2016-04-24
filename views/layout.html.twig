@@ -5,62 +5,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ app.request.basepath }}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ app.request.basepath }}/images/favicon.ico">
     <link href="{{ app.request.basepath }}/css/GoldenTicket.css" rel="stylesheet">
     <script type="text/javascript" src="{{ app.request.basepath }}/lib/jQuery/jquery.min.js"></script>
     <script type="text/javascript" src="{{ app.request.basepath }}/lib/bootstrap/js/bootstrap.min.js"></script>
     <title>GoldenTicket - {% block title %}{% endblock %}</title>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-target">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{ path('home') }}">GoldenTicket</a>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-collapse-target">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Affichage par catégorie</a>
-                            <ul class="dropdown-menu">
-                                {% block research %}{% endblock %}
-                            </ul>
-                        </li>
-                        {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <li><a href="{{ path('panier') }}"><span class="glyphicon glyphicon-shopping-cart"></span> Votre panier</a></li>
-                            {% if app.user and is_granted('ROLE_ADMIN') %}
-                              <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ path('admin') }}"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
-                            {% endif %}
-                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> Welcome, {{ app.user.login }} <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ path('logout') }}">Log out</a></li>
-                                    <li><a href="{{ path('user_edit') }}">Account</a></li>
-                                </ul>
-                            </li>
-                        {% else %}
-                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> Not connected <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ path('login') }}">Log in</a></li>
-                                    <li><a href="{{ path('sign_in') }}">Sign in</a></li>
-                                </ul>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div><!-- /.container -->
-        </nav>
-        <div id="content">{% block content %}{% endblock %}</div>
-        <footer class="footer">
-            <a href="https://github.com/YoannLth">GoldenTicket</a> is a school project
-        </footer>
+    <div class="containerGT">
+      <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarGT">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ path('home') }}"><img src="{{ app.request.basepath }}/images/Golden_Ticket_Logo.png">
+            </a>
+          </div>
+          <div class="navbar-collapse collapse" id="navbarGT">
+              <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Affichage par catégorie <span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                          {% block research %}{% endblock %}
+                      </ul>
+                  </li>
+                  {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+                  <li><a href="{{ path('panier') }}"><span class="glyphicon glyphicon-shopping-cart"></span> Votre panier</a></li>
+                      {% if app.user and is_granted('ROLE_ADMIN') %}
+                        <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ path('admin') }}"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
+                      {% endif %}
+                      <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                          <span class="glyphicon glyphicon-user"></span> Welcome, {{ app.user.login }} <b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                              <li><a href="{{ path('logout') }}">Log out</a></li>
+                              <li><a href="{{ path('user_edit') }}">Account</a></li>
+                          </ul>
+                      </li>
+                  {% else %}
+                      <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                          <span class="glyphicon glyphicon-user"></span> Not connected <b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                              <li><a href="{{ path('login') }}">Log in</a></li>
+                              <li><a href="{{ path('sign_in') }}">Sign in</a></li>
+                          </ul>
+                      </li>
+                  {% endif %}
+              </ul>
+          </div>
+          <!--/.nav-collapse -->
+        </div>
+        <!--/.container-fluid -->
+      </nav>
+      <div id="content">{% block content %}{% endblock %}</div>
+      <footer class="footer">
+          <a href="https://github.com/YoannLth">GoldenTicket</a> is a school project
+      </footer>
     </div>
 </body>
 </html>
