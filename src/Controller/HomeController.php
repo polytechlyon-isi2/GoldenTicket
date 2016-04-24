@@ -64,8 +64,8 @@ class HomeController {
                 $app['session']->getFlashBag()->add('success', 'Your command was succesfully added.');
             }
             $ticketFormView = $ticketForm->createView();
-          
-          
+
+
           $comment = new Commentary();
           $comment->setEvent($event);
           $comment->setUser($user);
@@ -85,8 +85,8 @@ class HomeController {
           'commentForm' => $commentFormView,
           'ticketForm' => $ticketFormView));
     }
-    
-    
+
+
     /**
      * Delete ticket controller.
      *
@@ -100,7 +100,7 @@ class HomeController {
         // Redirect to panier page
         return $app->redirect($app['url_generator']->generate('panier'));
     }
-    
+
     /**
      * User Panier controller.
      *
@@ -115,7 +115,7 @@ class HomeController {
         'tickets' => $tickets,
         'types' => $types));
     }
-    
+
 
     /**
      * User login controller.
@@ -164,8 +164,8 @@ class HomeController {
           'types' => $types,
           'userForm' => $userForm->createView()));
     }
-    
-    
+
+
     public function editAccountAction(Request $request, Application $app) {
         $user = $app['user'];
         $types = $app['dao.type']->findAll();
@@ -186,5 +186,5 @@ class HomeController {
             'types' => $types,
             'userForm' => $userForm->createView()));
     }
-    
+
 }

@@ -78,6 +78,8 @@ $app['dao.ticket'] = $app->share(function ($app) {
     return new GoldenTicket\DAO\TicketDAO($app['db']);
 });
 
+$app['types'] = $app['dao.type']->findAll();
+
 // Register error handler
 $app->error(function (\Exception $e, $code) use ($app) {
     switch ($code) {
