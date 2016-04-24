@@ -11,9 +11,19 @@
 {% block content %}
 {% for event in events %}
 <article>
-
-    <h2><a class="eventTitle" href="{{ path('event', { 'id': event.num }) }}">{{ event.name }}</a></h2>
-    <p>{{ event.desc }}</p>
+    <div class="jumbotron indexJumb">
+      <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-6">
+                <img class="img-responsive img-rounded" class="coverImgIndex center-block" src="{{ app.request.basepath }}/images/{{ event.coverImageLink }}" width="150" height="150"/>
+            </div>
+            <div class="col-md-10 col-sm-6">
+                <h2><a class="eventTitle" href="{{ path('event', { 'id': event.num }) }}">{{ event.name }}</a></h2>
+                <p><small>{{ event.desc }}</small></p>
+            </div>
+        </div>
+      </div>
+    </div>
 </article>
 {% endfor %}
 {% endblock %}

@@ -71,3 +71,8 @@ body {
 .navbar-nav>li>.dropdown-menu {
 	z-index: 9999;
 }
+
+.indexJumb{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
