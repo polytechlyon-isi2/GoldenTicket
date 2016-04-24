@@ -49,6 +49,7 @@ class HomeController {
      */
     public function eventAction($id, Request $request, Application $app) {
       $event = $app['dao.event']->find($id);
+        $types = $app['dao.type']->findAll();
       $commentFormView = null;
       $ticketFormView = null;
       $user = $app['user'];
@@ -80,6 +81,7 @@ class HomeController {
       return $app['twig']->render('event.html.twig', array(
           'event' => $event,
           'comments' => $comments,
+          'types' => $types,
           'commentForm' => $commentFormView,
           'ticketForm' => $ticketFormView));
     }
@@ -107,9 +109,11 @@ class HomeController {
     public function panierAction(Application $app) {
         //Find every tickets ordered by the user
         $user = $app['user'];
+        $types = $app['dao.type']->findAll();
         $tickets = $app['dao.ticket']->findByUser($user);
     return $app['twig']->render('panier.html.twig', array(
-        'tickets' => $tickets));
+        'tickets' => $tickets,
+        'types' => $types));
     }
     
 
@@ -136,6 +140,7 @@ class HomeController {
      */
     public function signInAction(Request $request, Application $app) {
       $user = new User();
+        $types = $app['dao.type']->findAll();
       $userForm = $app['form.factory']->create(new UserType(), $user);
       $userForm->handleRequest($request);
       if ($userForm->isSubmitted() && $userForm->isValid()) {
@@ -154,12 +159,14 @@ class HomeController {
       }
       return $app['twig']->render('user_form.html.twig', array(
           'title' => 'Sign in',
+          'types' => $types,
           'userForm' => $userForm->createView()));
     }
     
     
     public function editAccountAction(Request $request, Application $app) {
         $user = $app['user'];
+        $types = $app['dao.type']->findAll();
         $userForm = $app['form.factory']->create(new UserType(), $user);
         $userForm->handleRequest($request);
         if ($userForm->isSubmitted() && $userForm->isValid()) {
@@ -174,6 +181,7 @@ class HomeController {
         }
         return $app['twig']->render('user_form.html.twig', array(
             'title' => 'Edit user',
+            'types' => $types,
             'userForm' => $userForm->createView()));
     }
     
