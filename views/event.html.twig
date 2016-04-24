@@ -17,19 +17,23 @@
                 <p><small>{{ event.desc }}</small></p>
             </div>
         </div>
-        <div class = "row">
+        
+    </div>
             {% if ticketForm %}
-            {{ form_start(ticketForm) }}
+            {{ form_start(ticketForm, { 'attr': {'class': 'form-horizontal'} }) }}
             <div class="form-group">
-            {{ form_errors(ticketForm.num_place) }}
-            {{ form_widget(ticketForm.num_place, { 'attr':  {
-                'class': 'form-control',
-                'rows': '4'
-            }}) }}
+                <div class="col-sm-4">
+                    {{ form_errors(ticketForm.num_place) }}
+                    {{ form_widget(ticketForm.num_place, { 'attr':  {
+                        'row': '4',
+                        'class': 'form-control',
+                        'placeholder': 'Enter a place number for your ticket...'
+                    }}) }}
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" class="btn btn-primary" value="Command a ticket" />
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Command a ticket" />
-             </div>
                 {{ form_end(ticketForm) }}
                 {% for flashMessage in app.session.flashbag.get('success') %}
                     <div class="alert alert-success">
@@ -39,8 +43,6 @@
             {% else %}
                 <a href="{{ path('login') }} ">Log in</a> to buy a ticket.
             {% endif %}
-        </div>
-    </div>
 
 
     <h3>Comments</h3>
