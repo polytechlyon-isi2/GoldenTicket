@@ -65,7 +65,7 @@ class TypeDAO extends DAO
 
           if ($type->getNum()) {
               // The type has already been saved : update it
-              $this->getDb()->update('eventtype', $typeData, array('num_type' => $type->getNum()));
+              $this->getDb()->update('eventtype', $typeData, array('num_ET' => $type->getNum()));
           } else {
               // The type has never been saved : insert it
               $this->getDb()->insert('eventtype', $typeData);
@@ -84,7 +84,7 @@ class TypeDAO extends DAO
        * @return \MicroCMS\Domain\Type|throws an exception if no matching type is found
        */
       public function find($id) {
-          $sql = "select * from typeary where num_typeary=?";
+          $sql = "select * from eventtype where num_ET=?";
           $row = $this->getDb()->fetchAssoc($sql, array($id));
 
           if ($row)
@@ -102,7 +102,7 @@ class TypeDAO extends DAO
        */
       public function delete($id) {
           // Delete the type
-          $this->getDb()->delete('typeary', array('num_typeary' => $id));
+          $this->getDb()->delete('eventtype', array('num_ET' => $id));
       }
 
 }

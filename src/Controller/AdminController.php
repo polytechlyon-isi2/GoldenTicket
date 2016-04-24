@@ -223,7 +223,7 @@ class AdminController {
         $typeForm->handleRequest($request);
         if ($typeForm->isSubmitted() && $typeForm->isValid()) {
             $app['dao.type']->save($type);
-            $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
+            $app['session']->getFlashBag()->add('success', 'The type was successfully created.');
         }
         return $app['twig']->render('type_form.html.twig', array(
             'title' => 'New type',
@@ -238,22 +238,16 @@ class AdminController {
      * @param Application $app Silex application
      */
     public function editTypeAction($id, Request $request, Application $app) {
-        $user = $app['dao.user']->find($id);
-        $userForm = $app['form.factory']->create(new UserType(), $user);
-        $userForm->handleRequest($request);
-        if ($userForm->isSubmitted() && $userForm->isValid()) {
-            $plainPassword = $user->getPassword();
-            // find the encoder for the user
-            $encoder = $app['security.encoder_factory']->getEncoder($user);
-            // compute the encoded password
-            $password = $encoder->encodePassword($plainPassword, $user->getSalt());
-            $user->setPassword($password);
-            $app['dao.user']->save($user);
-            $app['session']->getFlashBag()->add('success', 'The user was succesfully updated.');
+        $type = $app['dao.type']->find($id);
+        $typeForm = $app['form.factory']->create(new TypeType(), $type);
+        $typeForm->handleRequest($request);
+        if ($typeForm->isSubmitted() && $typeForm->isValid()) {
+            $app['dao.type']->save($type);
+            $app['session']->getFlashBag()->add('success', 'The type was succesfully updated.');
         }
-        return $app['twig']->render('user_form.html.twig', array(
-            'title' => 'Edit user',
-            'userForm' => $userForm->createView()));
+        return $app['twig']->render('type_form.html.twig', array(
+            'title' => 'Edit type',
+            'typeForm' => $typeForm->createView()));
     }
 
     /**
@@ -263,11 +257,9 @@ class AdminController {
      * @param Application $app Silex application
      */
     public function deleteTypeAction($id, Application $app) {
-        // Delete all associated comments
-        $app['dao.commentary']->deleteAllByUser($id);
-        // Delete the user
-        $app['dao.user']->delete($id);
-        $app['session']->getFlashBag()->add('success', 'The user was succesfully removed.');
+        // Delete the type
+        $app['dao.type']->delete($id);
+        $app['session']->getFlashBag()->add('success', 'The type was succesfully removed.');
         // Redirect to admin home page
         return $app->redirect($app['url_generator']->generate('admin'));
     }
