@@ -156,4 +156,25 @@ class HomeController {
           'title' => 'Sign in',
           'userForm' => $userForm->createView()));
     }
+    
+    
+    public function editAccountAction(Request $request, Application $app) {
+        $user = $app['user'];
+        $userForm = $app['form.factory']->create(new UserType(), $user);
+        $userForm->handleRequest($request);
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
+            $plainPassword = $user->getPassword();
+            // find the encoder for the user
+            $encoder = $app['security.encoder_factory']->getEncoder($user);
+            // compute the encoded password
+            $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+            $user->setPassword($password);
+            $app['dao.user']->save($user);
+            $app['session']->getFlashBag()->add('success', 'The user was succesfully updated.');
+        }
+        return $app['twig']->render('user_form.html.twig', array(
+            'title' => 'Edit user',
+            'userForm' => $userForm->createView()));
+    }
+    
 }

@@ -15,6 +15,9 @@ $app->get('/login', "GoldenTicket\Controller\HomeController::loginAction")->bind
 //sign in form
 $app->get('/sign_in', "GoldenTicket\Controller\HomeController::signInAction")->bind('sign_in');
 
+//edit user account
+$app->match('/user/edit', "GoldenTicket\Controller\HomeController::editAccountAction")->bind('user_edit');
+
 //Delete a ticket
 $app->get('/panier/{id}/delete', "GoldenTicket\Controller\HomeController::deleteTicketAction")->bind('ticket_delete');
 
