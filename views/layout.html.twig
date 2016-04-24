@@ -11,8 +11,11 @@
     <script type="text/javascript" src="{{ app.request.basepath }}/lib/bootstrap/js/bootstrap.min.js"></script>
     <title>GoldenTicket - {% block title %}{% endblock %}</title>
 </head>
+    
 <body>
     <div class="containerGT">
+        
+      <!-- Navigation bar -->
       <nav class="navbar navbar-default navbar-fixed-top navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
@@ -27,6 +30,7 @@
           </div>
           <div class="navbar-collapse collapse" id="navbarGT">
               <ul class="nav navbar-nav navbar-right">
+                  <!-- Search events by categories -->
                   <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Event Categories <span class="caret"></span></a>
                       <ul class="dropdown-menu" role="menu">
@@ -35,11 +39,20 @@
                                 {% endfor %}
                       </ul>
                   </li>
+                  <!-- /Search events by categories -->
+                  
+                  <!-- Acces to shopping cart -->
                   {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
                   <li><a href="{{ path('panier') }}"><span class="glyphicon glyphicon-shopping-cart"></span> Your basket panier</a></li>
+                  <!-- /Acces to shopping cart -->
+                  
+                  <!-- Access to administration page -->
                       {% if app.user and is_granted('ROLE_ADMIN') %}
                         <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ path('admin') }}"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
                       {% endif %}
+                  <!-- /Access to administration page -->
+                  
+                  <!-- Access to account options -->
                       <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                           <span class="glyphicon glyphicon-user"></span> Welcome, {{ app.user.login }} <b class="caret"></b></a>
@@ -59,6 +72,7 @@
                       </li>
                   {% endif %}
               </ul>
+              <!-- /Access to account options -->
           </div>
           <!--/.nav-collapse -->
         </div>

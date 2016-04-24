@@ -10,6 +10,8 @@
     {{ flashMessage }}
 </div>
 {% endfor %}
+
+<!-- Table of events -->
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
         <ul class="nav nav-tabs nav-justified">
@@ -69,10 +71,11 @@
         {% endif %}
         <a href="{{ path('admin_event_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add event</button></a>
     </div>
+    <!-- /table of event -->
 
 
 
-
+    <!-- Table of comments -->
     <div class="tab-pane fade adminTable" id="comments">
       {% if comments %}
       <div class="table-responsive">
@@ -120,10 +123,10 @@
       <div class="alert alert-warning">No comments found.</div>
       {% endif %}
     </div>
+    <!-- /Table of comments -->
 
 
-
-
+    <!-- Table of event -->
     <div class="tab-pane fade adminTable" id="users">
       {% if users %}
           <div class="table-responsive">
@@ -176,7 +179,10 @@
           {% endif %}
           <a href="{{ path('admin_user_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add user</button></a>
     </div>
+    <!-- /Table of user -->
 
+
+    <!-- Table of types -->
     <div class="tab-pane fade adminTable" id="types">
       {% if types %}
           <div class="table-responsive">
@@ -223,6 +229,7 @@
           {% endif %}
           <a href="{{ path('admin_type_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add type</button></a>
     </div>
+    <!-- /Table of types -->
 
 
 </div>

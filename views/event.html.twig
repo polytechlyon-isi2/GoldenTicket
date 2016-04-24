@@ -7,7 +7,7 @@
 <p>
 
 
-
+    <!-- Details of the event -->
     <div class="jumbotron">
         <div class="row">
             <div class="col-md-3 col-sm-7">
@@ -20,7 +20,9 @@
         </div>
 
     </div>
+    <!-- /Details of the event -->
 
+    <!-- Ticket command form -->
     <h3>Have a ticket for this event</h3>
     {% if ticketForm %}
     {{ form_start(ticketForm, { 'attr': {'class': 'form-horizontal'} }) }}
@@ -46,15 +48,19 @@
     {% else %}
         <a href="{{ path('login') }} ">Log in</a> to buy a ticket.
     {% endif %}
+    <!-- /Ticket command form -->
 
 
+    <!-- COmments for this event -->
     <h3>Comments</h3>
     {% for comment in comments %}
         <strong>{{ comment.user.login }}</strong> said : {{ comment.text }}<br>
     {% else %}
         No comments yet.
     {% endfor %}
+<!-- /COmments for this event -->
 
+    <!-- Form to add a comment -->
     <h3>Add a comment</h3>
     {% if commentForm %}
         {{ form_start(commentForm) }}
@@ -78,5 +84,6 @@
     {% else %}
         <a href="{{ path('login') }} ">Log in</a> to add comments.
     {% endif %}
+    <!-- /Form to add a comment -->
 </p>
 {% endblock %}

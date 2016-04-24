@@ -48,6 +48,12 @@ class EventDAO extends DAO
     }
 
 
+    /**
+     * Find the type(category) of an event.
+     *
+     * @param int $id the id of the event
+     * @return the name of the type.
+     */
     public function findType($id)
     {
         $sql = "select * from eventtype where num_ET=?";
@@ -56,6 +62,11 @@ class EventDAO extends DAO
     }
 
 
+    /**
+     * Find all the types.
+     *
+     * @return array the list of types.
+     */
     public function findAllTypes()
     {
         $sql = "select * from eventtype";
@@ -64,6 +75,12 @@ class EventDAO extends DAO
     }
 
 
+    /**
+     * Find the events of a type.
+     *
+     * @param $num_ET the type
+     * @return array the list of events
+     */
     public function findByType($num_ET) {
         $sql = "select * from event where num_ET=?";
         $result = $this->getDb()->fetchAll($sql, array($num_ET));
@@ -78,7 +95,12 @@ class EventDAO extends DAO
 
 
 
-
+    /**
+     * Find an event by his id.
+     *
+     * @param int $id the id of the event
+     * @return the event.
+     */
     public function find($id) {
         $sql = "select * from event where num_event=?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));

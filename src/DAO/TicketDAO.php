@@ -17,7 +17,7 @@ class TicketDAO extends DAO
     /**
      * Returns a ticket matching the supplied num.
      *
-     * @param integer $num The user num.
+     * @param integer $num The ticket num.
      *
      * @return \GoldenTicket\Domain\User|throws an exception if no matching user is found
      */
@@ -31,6 +31,14 @@ class TicketDAO extends DAO
             throw new \Exception("No ticket matching num " . $num);
     }
     
+    
+    /**
+     * Returns a list matching the supplied User.
+     *
+     * @param User $user The user num.
+     *
+     * @return the list of tickets
+     */
     public function findByUser(User $user) {
         $sql = "select num_order from order_gd where num_user=?";
         $row = $this->getDb()->fetchAssoc($sql, array($user->getNum()));
@@ -51,8 +59,8 @@ class TicketDAO extends DAO
     /**
      * Creates a Ticket object based on a DB row.
      *
-     * @param array $row The DB row containing User data.
-     * @return \MicroCMS\Domain\User
+     * @param array $row The DB row containing Ticket data.
+     * @return \MicroCMS\Domain\Ticket
      */
     protected function buildDomainObject($row) {
         $ticket = new Ticket();
@@ -68,6 +76,13 @@ class TicketDAO extends DAO
     }
     
     
+    /**
+     * Find the event linked with a ticket num.
+     *
+     * @param integer $id The ticket num.
+     *
+     * @return the name of the event
+     */
     public function findEvent($id)
     {
         $sql = "select * from event where num_event=?";
@@ -76,9 +91,10 @@ class TicketDAO extends DAO
     }
 
           /**
-       * Saves a user into the database.
+       * Saves a ticekt into the database.
        *
-       * @param \MicroCMS\Domain\User $user The user to save
+       * @param \MicroCMS\Domain\Ticket $ticket The ticket to save
+       * @param \MicroCMS\Domain\User $user The user linked to the ticket
        */
       public function save(Ticket $ticket, User $user) {
           $ticketData = array(
@@ -112,7 +128,7 @@ class TicketDAO extends DAO
       /**
        * Removes a ticket from the database.
        *
-       * @param @param integer $id The user id.
+       * @param @param integer $id The ticket id.
        */
       public function delete($id) {
           // Delete the ticket
