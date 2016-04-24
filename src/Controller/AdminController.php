@@ -11,11 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use GoldenTicket\Domain\Commentary;
 use GoldenTicket\Domain\Event;
 use GoldenTicket\Domain\User;
+use GoldenTicket\Domain\Type;
 
 use GoldenTicket\Form\Type\CommentType;
 use GoldenTicket\Form\Type\EventType;
 use GoldenTicket\Form\Type\UserType;
 use GoldenTicket\Form\Type\UserTypeAdmin;
+use GoldenTicket\Form\Type\TypeType;
 
 
 
@@ -210,31 +212,22 @@ class AdminController {
 
 
     /**
-     * Add user controller.
+     * Add type controller.
      *
      * @param Request $request Incoming request
      * @param Application $app Silex application
      */
     public function addTypeAction(Request $request, Application $app) {
-        $user = new User();
-        $userForm = $app['form.factory']->create(new UserType(), $user);
-        $userForm->handleRequest($request);
-        if ($userForm->isSubmitted() && $userForm->isValid()) {
-            // generate a random salt value
-            $salt = substr(md5(time()), 0, 23);
-            $user->setSalt($salt);
-            $plainPassword = $user->getPassword();
-            // find the default encoder
-            $encoder = $app['security.encoder.digest'];
-            // compute the encoded password
-            $password = $encoder->encodePassword($plainPassword, $user->getSalt());
-            $user->setPassword($password);
-            $app['dao.user']->save($user);
+        $type = new Type();
+        $typeForm = $app['form.factory']->create(new TypeType(), $type);
+        $typeForm->handleRequest($request);
+        if ($typeForm->isSubmitted() && $typeForm->isValid()) {
+            $app['dao.type']->save($type);
             $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
         }
-        return $app['twig']->render('user_form.html.twig', array(
-            'title' => 'New user',
-            'userForm' => $userForm->createView()));
+        return $app['twig']->render('type_form.html.twig', array(
+            'title' => 'New type',
+            'typeForm' => $typeForm->createView()));
     }
 
     /**

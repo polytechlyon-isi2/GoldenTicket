@@ -8,9 +8,9 @@ class TypeDAO extends DAO
 {
 
       /**
-       * Returns a list of all comments, sorted by date (most recent first).
+       * Returns a list of all types, sorted by date (most recent first).
        *
-       * @return array A list of all comments.
+       * @return array A list of all types.
        */
       public function findAll() {
           $sql = "select * from eventtype order by num_ET";
@@ -40,10 +40,10 @@ class TypeDAO extends DAO
       }
 
       /**
-       * Creates a Comment object based on a DB row.
+       * Creates a Type object based on a DB row.
        *
-       * @param array $row The DB row containing Comment data.
-       * @return \GoldenTicket\Domain\Commentary
+       * @param array $row The DB row containing Type data.
+       * @return \GoldenTicket\Domain\Typeary
        */
       protected function buildDomainObject($row) {
         $type = new Type();
@@ -54,58 +54,55 @@ class TypeDAO extends DAO
       }
 
         /**
-       * Saves a comment into the database.
+       * Saves a type into the database.
        *
-       * @param \MicroCMS\Domain\Comment $comment The comment to save
+       * @param \MicroCMS\Domain\Type $type The type to save
        */
-      public function save(Commentary $comment) {
-         /* $commentData = array(
-              'rate_commentary' => '0',
-              'text_commentary' => $comment->getText(),
-              'num_event' => $comment->getEvent()->getNum(),
-              'num_user' => $comment->getUser()->getNum()
+      public function save(Type $type) {
+         $typeData = array(
+              'name_ET' => $type->getName()
               );
 
-          if ($comment->getNum()) {
-              // The comment has already been saved : update it
-              $this->getDb()->update('commentary', $commentData, array('num_commentary' => $comment->getNum()));
+          if ($type->getNum()) {
+              // The type has already been saved : update it
+              $this->getDb()->update('eventtype', $typeData, array('num_type' => $type->getNum()));
           } else {
-              // The comment has never been saved : insert it
-              $this->getDb()->insert('commentary', $commentData);
-              // Get the id of the newly created comment and set it on the entity.
+              // The type has never been saved : insert it
+              $this->getDb()->insert('eventtype', $typeData);
+              // Get the id of the newly created type and set it on the entity.
               $id = $this->getDb()->lastInsertId();
-              $comment->setNum($id);
-          }*/
+              $type->setNum($id);
+          }
       }
 
 
         /**
-       * Returns a comment matching the supplied id.
+       * Returns a type matching the supplied id.
        *
-       * @param integer $id The comment id
+       * @param integer $id The type id
        *
-       * @return \MicroCMS\Domain\Comment|throws an exception if no matching comment is found
+       * @return \MicroCMS\Domain\Type|throws an exception if no matching type is found
        */
       public function find($id) {
-          $sql = "select * from commentary where num_commentary=?";
+          $sql = "select * from typeary where num_typeary=?";
           $row = $this->getDb()->fetchAssoc($sql, array($id));
 
           if ($row)
               return $this->buildDomainObject($row);
           else
-              throw new \Exception("No comment matching id " . $id);
+              throw new \Exception("No type matching id " . $id);
       }
 
       // ...
 
       /**
-       * Removes a comment from the database.
+       * Removes a type from the database.
        *
-       * @param @param integer $id The comment id
+       * @param @param integer $id The type id
        */
       public function delete($id) {
-          // Delete the comment
-          $this->getDb()->delete('commentary', array('num_commentary' => $id));
+          // Delete the type
+          $this->getDb()->delete('typeary', array('num_typeary' => $id));
       }
 
 }
