@@ -124,7 +124,9 @@ class HomeController {
      * @param Application $app Silex application
      */
     public function loginAction(Request $request, Application $app) {
+        $types = $app['dao.type']->findAll();
       return $app['twig']->render('login.html.twig', array(
+          'types' => $types,
           'error'         => $app['security.last_error']($request),
           'last_username' => $app['session']->get('_security.last_username'),
       ));

@@ -12,60 +12,6 @@
     <title>GoldenTicket - {% block title %}{% endblock %}</title>
 </head>
 <body>
-<<<<<<< HEAD
-    <div class="container">
-        <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-target">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{ path('home') }}">GoldenTicket</a>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-collapse-target">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Affichage par catégorie</a>
-                            <ul class="dropdown-menu">
-                                {% for type in types %}
-                                    <li><a href="{{ path('eventByType', { 'id': type.num }) }}">{{ type.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <li><a href="{{ path('panier') }}"><span class="glyphicon glyphicon-shopping-cart"></span> Votre panier</a></li>
-                            {% if app.user and is_granted('ROLE_ADMIN') %}
-                              <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ path('admin') }}"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
-                            {% endif %}
-                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> Welcome, {{ app.user.login }} <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ path('logout') }}">Log out</a></li>
-                                    <li><a href="{{ path('user_edit') }}">Account</a></li>
-                                </ul>
-                            </li>
-                        {% else %}
-                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> Not connected <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ path('login') }}">Log in</a></li>
-                                    <li><a href="{{ path('sign_in') }}">Sign in</a></li>
-                                </ul>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div><!-- /.container -->
-        </nav>
-        <div id="content">{% block content %}{% endblock %}</div>
-        <footer class="footer">
-            <a href="https://github.com/YoannLth">GoldenTicket</a> is a school project
-        </footer>
-=======
     <div class="containerGT">
       <nav class="navbar navbar-default navbar-fixed-top navbar-default" role="navigation">
         <div class="container">
@@ -84,7 +30,9 @@
                   <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Event Categories <span class="caret"></span></a>
                       <ul class="dropdown-menu" role="menu">
-                          {% block research %}{% endblock %}
+                           {% for type in types %}
+                                    <li><a href="{{ path('eventByType', { 'id': type.num }) }}">{{ type.name }}</a></li>
+                                {% endfor %}
                       </ul>
                   </li>
                   {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -120,7 +68,6 @@
       <footer class="footer">
           <a href="https://github.com/YoannLth">GoldenTicket</a> is a school project
       </footer>
->>>>>>> 072efa4e29b8d8045858aeceffad0fa635c9b2ba
     </div>
 </body>
 </html>
