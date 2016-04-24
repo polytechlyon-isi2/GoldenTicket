@@ -12,14 +12,14 @@
 {% for event in events %}
 <article>
     <div class="jumbotron indexJumb">
-      <div class="container">
+      <div class="container containerIndex">
         <div class="row">
-            <div class="col-md-2 col-sm-6">
-                <img class="img-responsive img-rounded" class="coverImgIndex center-block" src="{{ app.request.basepath }}/images/{{ event.coverImageLink }}" width="150" height="150"/>
+            <div class="col-md-4 col-sm-6">
+                <img class="img-responsive img-rounded" class="coverImgIndex center-block" src="{{ app.request.basepath }}/images/{{ event.coverImageLink }}"/>
             </div>
-            <div class="col-md-10 col-sm-6">
+            <div class="col-md-8 col-sm-6">
                 <h2><a class="eventTitle" href="{{ path('event', { 'id': event.num }) }}">{{ event.name }}</a></h2>
-                <p><small>{{ event.desc }}</small></p>
+                <p class="eventDesc">{{ event.desc }}</p>
             </div>
         </div>
       </div>

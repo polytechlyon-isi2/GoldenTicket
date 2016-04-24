@@ -73,6 +73,21 @@ body {
 }
 
 .indexJumb{
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 6px;
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+}
+
+.containerIndex{
+  margin-left: 0;
+}
+
+.coverImgIndex{
+  width:100%;
+}
+
+.eventDesc{
+  font-size: 110% !important;
 }
