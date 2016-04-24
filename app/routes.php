@@ -1,5 +1,6 @@
 <?php
 
+
 // Home page
 $app->get('/', "GoldenTicket\Controller\HomeController::indexAction")->bind('home');
 
