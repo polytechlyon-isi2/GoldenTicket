@@ -75,11 +75,18 @@ class AdminController {
      * @param Application $app Silex application
      */
     public function editEventAction($id, Request $request, Application $app) {
+        define('APP_ROOT', __DIR__ . '/../');
         $types= $app['dao.type']->findAllSelectList();
         $event = $app['dao.event']->find($id);
         $eventForm = $app['form.factory']->create(new EventType($types), $event);
         $eventForm->handleRequest($request);
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
+            $file = $event->getCoverImageLink();
+            $fileName = md5(uniqid()).'.'.$file->getClientOriginalExtension();
+            //$path = $_SERVER['DOCUMENT_ROOT'] . '/GoldenTicket/web/images';
+            $path = APP_ROOT . '/../web/images';
+            $file->move($path, $fileName);
+            $event->setCoverImageLink($fileName);
             $app['dao.event']->save($event);
             $app['session']->getFlashBag()->add('success', 'The event was succesfully updated.');
         }

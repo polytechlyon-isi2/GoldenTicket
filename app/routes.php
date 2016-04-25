@@ -14,7 +14,7 @@ $app->match('/event/{id}', "GoldenTicket\Controller\HomeController::eventAction"
 $app->get('/login', "GoldenTicket\Controller\HomeController::loginAction")->bind('login');
 
 //sign in form
-$app->get('/sign_in', "GoldenTicket\Controller\HomeController::signInAction")->bind('sign_in');
+$app->match('/sign_in', "GoldenTicket\Controller\HomeController::signInAction")->bind('sign_in');
 
 //edit user account
 $app->match('/user/edit', "GoldenTicket\Controller\HomeController::editAccountAction")->bind('user_edit');

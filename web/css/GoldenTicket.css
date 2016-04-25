@@ -118,7 +118,9 @@ body {
 }
 
 .containerIndex{
-  margin-left: 0;
+  margin-left: 0px;
+  margin-right: 0px;
+  width : 100%;
 }
 
 .coverImgIndex{
@@ -127,5 +129,5 @@ body {
 
 .eventDesc{
   font-size: 110% !important;
-  margin-top: 2%;
+  margin-top: 4%;
 }

@@ -8,17 +8,19 @@
 
 
     <!-- Details of the event -->
-    <div class="jumbotron">
+    <div class="jumbotron indexJumb">
+      <div class="container containerIndex">
         <div class="row">
-            <div class="col-md-3 col-sm-7">
-                <img class="img-responsive img-rounded" id="imgAlbum" src="../images/rihanna.jpg" title="" width="250" height="250"/>
+            <div class="col-md-4 col-sm-6">
+                <img class="img-responsive img-rounded" class="coverImgIndex center-block" src="{{ app.request.basepath }}/images/{{ event.coverImageLink }}"/>
             </div>
-            <div class="col-md-9 col-sm-5">
-                <h2>{{ event.name }}</h2>
-                <p><small>{{ event.desc }}</small></p>
+            <div class="col-md-8 col-sm-6">
+                <h2><a class="eventTitle" href="#">{{ event.name }}</a></h2>
+                <h3>Price strarting at {{ event.minimalPrice}} $ -- Start date : {{ event.startDate}} - {{ event.startHour}} -- End date : {{ event.endDate}} - {{ event.endHour}}</h3>
+                <p class="eventDesc">{{ event.desc|nl2br}}</pre></p>
             </div>
         </div>
-
+      </div>
     </div>
     <!-- /Details of the event -->
 

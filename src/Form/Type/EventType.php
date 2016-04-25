@@ -41,7 +41,11 @@ class EventType extends AbstractType
             ))
             ->add('type', 'choice', array(
                       'choices' => $this->types))
-            ->add('coverImageLink', 'file', array('label' => 'Brochure (PDF file)'));
+            ->add('coverImageLink', 'file', array(
+            'data_class' => null
+            ));
+
+
     }
 
     public function getName()
